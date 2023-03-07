@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Dynamic.Core;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BooksApi.Models;
+using System.Reflection;
+using System.Text;
 
 namespace BooksApi.Controllers
 {
@@ -29,12 +32,41 @@ namespace BooksApi.Controllers
         return NotFound();
       }
 
-      return await _context.Books.OrderBy(book => book.Name)
+      var books = _context.Books.OrderBy(book => book.Name)
         .Skip((bookParameters.PageNumber - 1) * bookParameters.PageSize)
-        .Take(bookParameters.PageSize)
-        .ToListAsync();
+        .Take(bookParameters.PageSize);
 
       //return await _context.Books.ToListAsync();
+
+      if (!books.Any()) return new List<Book>();
+      if (string.IsNullOrWhiteSpace(bookParameters.OrderBy))
+      {
+        books = books.OrderBy(x => x.Name);
+        return await books.ToListAsync();
+      }
+      var orderParams = bookParameters.OrderBy.Trim().Split(',');
+      var propertyInfos = typeof(Book).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+      var orderQueryBuilder = new StringBuilder();
+      foreach (var param in orderParams)
+      {
+        if (string.IsNullOrWhiteSpace(param))
+          continue;
+        var propertyFromQueryName = param.Split(" ")[0];
+        var objectProperty = propertyInfos.FirstOrDefault(pi => pi.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase));
+        if (objectProperty == null)
+          continue;
+        var sortingOrder = param.EndsWith(" desc") ? "descending" : "ascending";
+        orderQueryBuilder.Append($"{objectProperty.Name.ToString()} {sortingOrder}, ");
+      }
+      var orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
+      if (string.IsNullOrWhiteSpace(orderQuery))
+      {
+        books = books.OrderBy(x => x.Name);
+        return await books.ToListAsync();
+      }
+      books = books.OrderBy(orderQuery);
+
+      return await books.ToListAsync();
     }
 
     // GET: api/Books/5

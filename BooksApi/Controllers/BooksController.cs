@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq.Dynamic.Core;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BooksApi.Models;
 using System.Reflection;
 using System.Text;
+using BookApi.Helpers;
 
 namespace BooksApi.Controllers
 {
@@ -36,12 +32,26 @@ namespace BooksApi.Controllers
         .Skip((bookParameters.PageNumber - 1) * bookParameters.PageSize)
         .Take(bookParameters.PageSize);
 
+      var page = PagedList<Book>.ToPagedList(_context.Books, bookParameters.PageNumber, bookParameters.PageSize);
+      System.Diagnostics.Debug.WriteLine($"Page: {page.CurrentPage}, PageSize: {page.PageSize}, TotalPages: {page.TotalPages}, TotalCount: {page.TotalCount}");
+      var metadata = new
+      {
+        page.TotalCount,
+        page.PageSize,
+        page.CurrentPage,
+        page.HasNext,
+        page.HasPrevious,
+      };
+
+      Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(metadata));
+
       //return await _context.Books.ToListAsync();
 
-      if (!books.Any()) return new List<Book>();
+      if (!books.Any()) return NotFound();
       if (string.IsNullOrWhiteSpace(bookParameters.OrderBy))
       {
         books = books.OrderBy(x => x.Name);
+
         return await books.ToListAsync();
       }
       var orderParams = bookParameters.OrderBy.Trim().Split(',');
@@ -83,6 +93,7 @@ namespace BooksApi.Controllers
       {
         return NotFound();
       }
+
 
       return book;
     }
@@ -148,7 +159,7 @@ namespace BooksApi.Controllers
       _context.Books.Add(book);
       await _context.SaveChangesAsync();
 
-      return CreatedAtAction("GetBook", new { id = book.Id }, book);
+      return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
     }
 
     // DELETE: api/Books/5

@@ -17,4 +17,6 @@ public abstract class QueryStringParameters
   }
 
   public string? OrderBy { get; set; }
+
+  public string? SearchBy { get; set; }
 }

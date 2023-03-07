@@ -22,18 +22,24 @@ namespace BooksApi.Controllers
 
     // GET: api/Books
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+    public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks([FromQuery] BookParameters bookParameters)
     {
       if (_context.Books == null)
       {
         return NotFound();
       }
-      return await _context.Books.ToListAsync();
+
+      return await _context.Books.OrderBy(book => book.Name)
+        .Skip((bookParameters.PageNumber - 1) * bookParameters.PageSize)
+        .Take(bookParameters.PageSize)
+        .ToListAsync();
+
+      //return await _context.Books.ToListAsync();
     }
 
     // GET: api/Books/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Book>> GetBook(long id)
+    public async Task<ActionResult<Book>> GetBookById(long id)
     {
       if (_context.Books == null)
       {
@@ -49,10 +55,28 @@ namespace BooksApi.Controllers
       return book;
     }
 
+    // GET: api/Books/isbn/5
+    [HttpGet("isbn/{isbn}")]
+    public async Task<ActionResult<IEnumerable<Book>>> GetBookByIsbn(int isbn)
+    {
+      if (_context.Books == null)
+      {
+        return NotFound();
+      }
+      var books = _context.Books.Where(x => x.Isbn == isbn);
+
+      if (books == null)
+      {
+        return NotFound();
+      }
+
+      return await books.ToListAsync();
+    }
+
     // PUT: api/Books/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutBook(long id, Book book)
+    public async Task<IActionResult> UpdateBook(long id, Book book)
     {
       if (id != book.Id)
       {
@@ -83,7 +107,7 @@ namespace BooksApi.Controllers
     // POST: api/Books
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Book>> PostBook(Book book)
+    public async Task<ActionResult<Book>> AddBook(Book book)
     {
       if (_context.Books == null)
       {

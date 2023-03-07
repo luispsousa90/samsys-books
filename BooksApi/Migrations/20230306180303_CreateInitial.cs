@@ -25,6 +25,12 @@ namespace BooksApi.Migrations
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_Isbn",
+                table: "Books",
+                column: "Isbn",
+                unique: true);
         }
 
         /// <inheritdoc />

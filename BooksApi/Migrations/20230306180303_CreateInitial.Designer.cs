@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksApi.Migrations
 {
     [DbContext(typeof(BookContext))]
-    [Migration("20230306162600_CreateInitial")]
+    [Migration("20230306180303_CreateInitial")]
     partial class CreateInitial
     {
         /// <inheritdoc />
@@ -47,6 +47,9 @@ namespace BooksApi.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Isbn")
+                        .IsUnique();
 
                     b.ToTable("Books");
                 });

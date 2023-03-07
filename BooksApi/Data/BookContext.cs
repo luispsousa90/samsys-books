@@ -10,4 +10,11 @@ public class BookContext : DbContext
   }
 
   public DbSet<Book> Books { get; set; } = null!;
+
+  protected override void OnModelCreating(ModelBuilder builder)
+  {
+    builder.Entity<Book>()
+        .HasIndex(u => u.Isbn)
+        .IsUnique();
+  }
 }

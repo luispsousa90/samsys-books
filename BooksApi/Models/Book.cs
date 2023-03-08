@@ -10,7 +10,7 @@ public class Book
   [Required]
   public string Name { get; set; } = null!;
   [Required]
-  public string Author { get; set; } = null!;
+  public long AuthorId { get; set; }
   [Range(0, 999999)]
   public decimal Price { get; set; }
 }

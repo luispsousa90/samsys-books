@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksApi.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +14,9 @@ namespace BooksApi.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly BookContext _context;
+        private readonly RepositoryContext _context;
 
-        public AuthorsController(BookContext context)
+        public AuthorsController(RepositoryContext context)
         {
             _context = context;
         }
@@ -87,7 +88,7 @@ namespace BooksApi.Controllers
         {
           if (_context.Authors == null)
           {
-              return Problem("Entity set 'BookContext.Authors'  is null.");
+              return Problem("Entity set 'RepositoryContext.Authors'  is null.");
           }
             _context.Authors.Add(author);
             await _context.SaveChangesAsync();
@@ -108,7 +109,6 @@ namespace BooksApi.Controllers
             {
                 return NotFound();
             }
-
             _context.Authors.Remove(author);
             await _context.SaveChangesAsync();
 

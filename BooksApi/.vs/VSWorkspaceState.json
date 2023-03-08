@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Controllers"
+    "\\Repository",
+    "\\Repository\\Authors"
   ],
-  "SelectedNode": "\\Controllers",
+  "SelectedNode": "\\Repository",
   "PreviewInSolutionExplorer": false
 }

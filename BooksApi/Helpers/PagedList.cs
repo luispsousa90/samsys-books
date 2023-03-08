@@ -1,4 +1,4 @@
-namespace BookApi.Helpers
+namespace BooksApi.Helpers
 {
 
   public class PagedList<T> : List<T>

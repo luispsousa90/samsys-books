@@ -1,10 +1,11 @@
+using BooksApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BooksApi.Models;
+namespace BooksApi.Data;
 
-public class BookContext : DbContext
+public class RepositoryContext : DbContext
 {
-  public BookContext(DbContextOptions<BookContext> options)
+  public RepositoryContext(DbContextOptions<RepositoryContext> options)
       : base(options)
   {
   }

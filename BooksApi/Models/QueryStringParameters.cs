@@ -1,3 +1,5 @@
+namespace BooksApi.Models;
+
 public abstract class QueryStringParameters
 {
   const int maxPageSize = 50;

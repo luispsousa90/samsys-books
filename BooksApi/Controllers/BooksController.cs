@@ -23,23 +23,66 @@ public class BooksController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
     {
-        var booksResult = _mapper.Map<IEnumerable<BookDto>>(await _repo.Book.GetAllBooks().ToListAsync());
+        try
+        {
+            var books = await _repo.Book.GetAllBooks();
+            var booksResult = _mapper.Map<IEnumerable<BookDto>>(books);
 
-        return Ok(booksResult);
+            return Ok(booksResult);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal server error");
+        }
     }
 
     // GET: api/Books/5
-    [HttpGet("{id:long}")]
+    [HttpGet("{id:long}", Name = "BookById")]
     public async Task<ActionResult<Book>> GetBook(long id)
     {
-        var book = await _repo.Book.GetBookById(id).FirstOrDefaultAsync();
+        try
+        {
+            var book = await _repo.Book.GetBookById(id).FirstOrDefaultAsync();
 
-        if (book == null) return NotFound();
+            if (book == null) return NotFound();
 
-        var bookResult = _mapper.Map<BookDto>(book);
+            var bookResult = _mapper.Map<BookDto>(book);
 
-        return Ok(bookResult);
+            return Ok(bookResult);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal server error");
+        }
     }
+
+    // POST: api/Books
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPost]
+    public async Task<ActionResult<Book>> PostBook(Book? book)
+    {
+        try
+        {
+            if (book == null)
+            {
+                BadRequest("Book object is null");
+            }
+
+            var bookEntity = _mapper.Map<Book>(book);
+
+            _repo.Book.CreateBook(bookEntity);
+            await _repo.SaveAsync();
+
+            var createdBook = _mapper.Map<BookDto>(bookEntity);
+
+            return CreatedAtRoute("BookById", new { id = createdBook.Id }, createdBook);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal server error");
+        }
+    }
+
 
     // PUT: api/Books/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -72,21 +115,7 @@ public class BooksController : ControllerBase
         return NoContent();
     }*/
 
-    // POST: api/Books
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    /*[HttpPost]
-    public async Task<ActionResult<Book>> PostBook(Book book)
-    {
-      if (_context.Books == null)
-      {
-          return Problem("Entity set 'RepositoryContext.Books'  is null.");
-      }
-        _context.Books.Add(book);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction("GetBook", new { id = book.Id }, book);
-    }
-
+    /*
     // DELETE: api/Books/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBook(long id)

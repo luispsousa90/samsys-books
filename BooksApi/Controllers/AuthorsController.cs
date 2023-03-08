@@ -1,5 +1,4 @@
 using AutoMapper;
-using BooksApi.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BooksApi.Models.Authors;
@@ -24,16 +23,16 @@ namespace BooksApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            var authorsResult = _mapper.Map<IEnumerable<AuthorDto>>(await _repo.Author.GetAllAuthors().ToListAsync());
+            var authorsResult = _mapper.Map<IEnumerable<AuthorDto>>(await _repo.Author.GetAllAuthors());
 
             return Ok(authorsResult);
         }
 
         // GET: api/Authors/5
-        [HttpGet("{id:long}")]
+        [HttpGet("{id:long}", Name = "AuthorById")]
         public async Task<ActionResult<Author>> GetAuthor(long id)
         {
-            var author = await _repo.Author.GetAuthorById(id).FirstOrDefaultAsync();
+            var author = await _repo.Author.GetAuthorById(id);
 
             if (author == null) return NotFound();
 
@@ -46,7 +45,7 @@ namespace BooksApi.Controllers
         [HttpGet("{id:long}/books")]
         public async Task<ActionResult<Author>> GetAuthorWithBooks(long id)
         {
-            var author = await _repo.Author.GetAuthorWithDetails(id).FirstOrDefaultAsync();
+            var author = await _repo.Author.GetAuthorWithDetails(id);
 
             if (author == null) return NotFound();
 

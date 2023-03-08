@@ -3,10 +3,10 @@ using BooksApi.Repository.Books;
 
 namespace BooksApi.Repository
 {
-  public interface IRepositoryWrapper
-  {
-    IAuthorRepository Author { get; }
-    IBookRepository Book { get; }
-    void Save();
-  }
+    public interface IRepositoryWrapper
+    {
+        IAuthorRepository Author { get; }
+        IBookRepository Book { get; }
+        Task SaveAsync();
+    }
 }

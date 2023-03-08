@@ -2,7 +2,7 @@ using BooksApi.Data;
 using BooksApi.Models;
 using BooksApi.Models.Books;
 using BooksApi.Repository.Shared;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BooksApi.Repository.Books
 {
@@ -13,26 +13,29 @@ namespace BooksApi.Repository.Books
         {
         }
 
-        public IOrderedQueryable<Book> GetAllBooks()
+        public async Task<IEnumerable<Book>> GetAllBooks()
         {
-            return FindAll().OrderBy(book => book.Name);
+            return await FindAll().OrderBy(book => book.Name).ToListAsync();
         }
 
-        public IQueryable<Book> GetBookById(long bookId)
+        public async Task<Book> GetBookById(long bookId)
         {
-            return FindByCondition(book => book.Id == bookId);
+            return await FindByCondition(book => book.Id == bookId).FirstOrDefaultAsync();
         }
 
-        public IQueryable<Book> CreateBook(Book book) => throw new NotImplementedException();
-
-        public IQueryable<Book> UpdateBook(long id, Book book)
+        public void CreateBook(Book book)
         {
-            throw new NotImplementedException();
+            Create(book);
         }
 
-        public Task<IActionResult> DeleteBook(long id)
+        public void UpdateBook(Book book)
         {
-            throw new NotImplementedException();
+            Update(book);
+        }
+
+        public void DeleteBook(Book book)
+        {
+            Delete(book);
         }
     }
 }

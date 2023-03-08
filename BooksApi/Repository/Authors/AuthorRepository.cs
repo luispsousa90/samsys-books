@@ -11,28 +11,28 @@ public class AuthorRepository : Repository<Author>, IAuthorRepository
     {
     }
 
-    public IOrderedQueryable<Author> GetAllAuthors()
+    public async Task<IEnumerable<Author>> GetAllAuthors()
     {
-        return FindAll().OrderBy(author => author.Name);
+        return await FindAll().OrderBy(author => author.Name).ToListAsync();
     }
 
-    public IQueryable<Author> GetAuthorById(long authorId)
+    public async Task<Author> GetAuthorById(long authorId)
     {
-        return FindByCondition(author => author.Id == authorId);
+        return await FindByCondition(author => author.Id == authorId).FirstOrDefaultAsync();
     }
 
-    public IQueryable<Author> GetAuthorWithDetails(long authorId)
+    public async Task<Author> GetAuthorWithDetails(long authorId)
     {
-        return FindByCondition(author => author.Id == authorId).Include(b => b.Books);
+        return await FindByCondition(author => author.Id == authorId).Include(b => b.Books).FirstOrDefaultAsync();
     }
 
-    public IQueryable<Author> CreateAuthor(Author author)
+    public void CreateAuthor(Author author)
     {
-        throw new NotImplementedException();
+        Create(author);
     }
 
-    public IQueryable<Author> UpdateAuthor(long id, Author author)
+    public void UpdateAuthor(long id, Author author)
     {
-        throw new NotImplementedException();
+        Update(author);
     }
 }

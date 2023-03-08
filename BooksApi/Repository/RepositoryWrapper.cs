@@ -18,8 +18,14 @@ public class RepositoryWrapper : IRepositoryWrapper
             {
                 _book = new BookRepository(_repoContext);
             }
+
             return _book;
         }
+    }
+
+    public async Task SaveAsync()
+    {
+        await _repoContext.SaveChangesAsync();
     }
 
     public IAuthorRepository Author
@@ -30,6 +36,7 @@ public class RepositoryWrapper : IRepositoryWrapper
             {
                 _author = new AuthorRepository(_repoContext);
             }
+
             return _author;
         }
     }
@@ -37,10 +44,5 @@ public class RepositoryWrapper : IRepositoryWrapper
     public RepositoryWrapper(RepositoryContext repositoryContext)
     {
         _repoContext = repositoryContext;
-    }
-
-    public void Save()
-    {
-        _repoContext.SaveChanges();
     }
 }

@@ -1,4 +1,6 @@
 using BooksApi.Models;
+using BooksApi.Models.Authors;
+using BooksApi.Models.Books;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksApi.Data;

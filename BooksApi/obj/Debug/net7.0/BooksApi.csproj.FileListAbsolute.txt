@@ -281,3 +281,5 @@ C:\Users\Luis\Documents\Samsys\samsys-books\BooksApi\bin\Debug\net7.0\System.Lin
 C:\Users\Luis\Documents\Samsys\samsys-books\BooksApi\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Luis\Documents\Samsys\samsys-books\BooksApi\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Luis\Documents\Samsys\samsys-books\BooksApi\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksApi\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksApi\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

@@ -7,8 +7,9 @@ namespace BooksApi.Repository.Shared
 {
   public abstract class Repository<T> : IRepositoryBase<T> where T : class
   {
-    protected RepositoryContext RepositoryContext { get; set; }
-    public Repository(RepositoryContext repositoryContext)
+    private RepositoryContext RepositoryContext { get; set; }
+
+    protected Repository(RepositoryContext repositoryContext)
     {
       RepositoryContext = repositoryContext;
     }

@@ -1,5 +1,7 @@
 using System.Linq;
 using System.Linq.Expressions;
+using BooksApi.Models.Books;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BooksApi.Repository
 {

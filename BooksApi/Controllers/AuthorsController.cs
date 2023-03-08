@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using BooksApi.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BooksApi.Models;
+using BooksApi.Models.Authors;
+using BooksApi.Repository;
 
 namespace BooksApi.Controllers
 {
@@ -14,45 +11,53 @@ namespace BooksApi.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        private readonly RepositoryContext _context;
+        private readonly IMapper _mapper;
+        private readonly IRepositoryWrapper _repo;
 
-        public AuthorsController(RepositoryContext context)
+        public AuthorsController(IRepositoryWrapper repo, IMapper mapper)
         {
-            _context = context;
+            _repo = repo;
+            _mapper = mapper;
         }
 
         // GET: api/Authors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-          if (_context.Authors == null)
-          {
-              return NotFound();
-          }
-            return await _context.Authors.ToListAsync();
+            var authorsResult = _mapper.Map<IEnumerable<AuthorDto>>(await _repo.Author.GetAllAuthors().ToListAsync());
+
+            return Ok(authorsResult);
         }
 
         // GET: api/Authors/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:long}")]
         public async Task<ActionResult<Author>> GetAuthor(long id)
         {
-          if (_context.Authors == null)
-          {
-              return NotFound();
-          }
-            var author = await _context.Authors.FindAsync(id);
+            var author = await _repo.Author.GetAuthorById(id).FirstOrDefaultAsync();
 
-            if (author == null)
-            {
-                return NotFound();
-            }
+            if (author == null) return NotFound();
 
-            return author;
+            var authorResult = _mapper.Map<AuthorDto>(author);
+
+            return Ok(authorResult);
+        }
+
+        // GET: api/Authors/5/books
+        [HttpGet("{id:long}/books")]
+        public async Task<ActionResult<Author>> GetAuthorWithBooks(long id)
+        {
+            var author = await _repo.Author.GetAuthorWithDetails(id).FirstOrDefaultAsync();
+
+            if (author == null) return NotFound();
+
+            var authorResult = _mapper.Map<AuthorDto>(author);
+
+            return Ok(authorResult);
         }
 
         // PUT: api/Authors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        /*[HttpPut("{id}")]
         public async Task<IActionResult> PutAuthor(long id, Author author)
         {
             if (id != author.Id)
@@ -86,10 +91,11 @@ namespace BooksApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Author>> PostAuthor(Author author)
         {
-          if (_context.Authors == null)
-          {
-              return Problem("Entity set 'RepositoryContext.Authors'  is null.");
-          }
+            if (_context.Authors == null)
+            {
+                return Problem("Entity set 'RepositoryContext.Authors'  is null.");
+            }
+
             _context.Authors.Add(author);
             await _context.SaveChangesAsync();
 
@@ -104,11 +110,13 @@ namespace BooksApi.Controllers
             {
                 return NotFound();
             }
+
             var author = await _context.Authors.FindAsync(id);
             if (author == null)
             {
                 return NotFound();
             }
+
             _context.Authors.Remove(author);
             await _context.SaveChangesAsync();
 
@@ -118,6 +126,6 @@ namespace BooksApi.Controllers
         private bool AuthorExists(long id)
         {
             return (_context.Authors?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        }*/
     }
 }

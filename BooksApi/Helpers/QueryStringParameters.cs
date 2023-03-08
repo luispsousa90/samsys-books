@@ -1,4 +1,4 @@
-namespace BooksApi.Models;
+namespace BooksApi.Helpers;
 
 public abstract class QueryStringParameters
 {

@@ -15,7 +15,10 @@ builder.Services.AddDbContext<RepositoryContext>(opt =>
 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Repository Wrapper
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+// Auto Mapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

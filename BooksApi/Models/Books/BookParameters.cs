@@ -1,4 +1,6 @@
-using BooksApi.Models;
+using BooksApi.Helpers;
+
+namespace BooksApi.Models.Books;
 
 public class BookParameters : QueryStringParameters
 {
@@ -7,4 +9,3 @@ public class BookParameters : QueryStringParameters
     OrderBy = "name";
   }
 }
-

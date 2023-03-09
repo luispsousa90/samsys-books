@@ -2,7 +2,7 @@ using AutoMapper;
 using BooksApi.Models.Books;
 using BooksApi.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BooksApi.Controllers;
 
@@ -21,12 +21,23 @@ public class BooksController : ControllerBase
 
     // GET: api/Books
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+    public async Task<ActionResult<IEnumerable<Book>>> GetBooks([FromQuery] BookParameters bookParameters)
     {
         try
         {
-            var books = await _repo.Book.GetAllBooks();
+            var books = await _repo.Book.GetAllBooks(bookParameters);
             var booksResult = _mapper.Map<IEnumerable<BookDto>>(books);
+
+            var metadata = new
+            {
+                books.TotalCount,
+                books.PageSize,
+                books.CurrentPage,
+                books.TotalPages,
+                books.HasNext,
+                books.HasPrevious
+            };
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
             return Ok(booksResult);
         }
@@ -42,7 +53,7 @@ public class BooksController : ControllerBase
     {
         try
         {
-            var book = await _repo.Book.GetBookById(id).FirstOrDefaultAsync();
+            var book = await _repo.Book.GetBookById(id);
 
             if (book == null) return NotFound();
 
@@ -59,7 +70,7 @@ public class BooksController : ControllerBase
     // POST: api/Books
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Book>> PostBook(Book? book)
+    public async Task<ActionResult<Book>> PostBook([FromBody] BookForCreationDto book)
     {
         try
         {
@@ -86,58 +97,60 @@ public class BooksController : ControllerBase
 
     // PUT: api/Books/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    /*[HttpPut("{id}")]
-    public async Task<IActionResult> PutBook(long id, Book book)
+    [HttpPut("{id:long}")]
+    public async Task<IActionResult> PutBook(long id, [FromBody] BookForUpdateDto book)
     {
-        if (id != book.Id)
-        {
-            return BadRequest();
-        }
-
-        _context.Entry(book).State = EntityState.Modified;
-
         try
         {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!BookExists(id))
+            if (book == null)
+            {
+                return BadRequest("Owner object is null");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid model object");
+            }
+
+            var bookEntity = await _repo.Book.GetBookById(id);
+            if (bookEntity == null)
             {
                 return NotFound();
             }
-            else
-            {
-                throw;
-            }
+
+            _mapper.Map(book, bookEntity);
+            _repo.Book.UpdateBook(bookEntity);
+            await _repo.SaveAsync();
+
+            return NoContent();
         }
-
-        return NoContent();
-    }*/
-
-    /*
-    // DELETE: api/Books/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteBook(long id)
-    {
-        if (_context.Books == null)
+        catch (Exception ex)
         {
-            return NotFound();
+            return StatusCode(500, "Internal server error");
         }
-        var book = await _context.Books.FindAsync(id);
-        if (book == null)
-        {
-            return NotFound();
-        }
-
-        _context.Books.Remove(book);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
     }
 
-    private bool BookExists(long id)
+    // DELETE: api/Books/5
+    [HttpDelete("{id:long}")]
+    public async Task<IActionResult> DeleteBook(long id)
     {
-        return (_context.Books?.Any(e => e.Id == id)).GetValueOrDefault();
-    }*/
+        try
+        {
+            var book = await _repo.Book.GetBookById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            _repo.Book.DeleteBook(book);
+            await _repo.SaveAsync();
+
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, "Internal server error");
+        }
+    }
 }

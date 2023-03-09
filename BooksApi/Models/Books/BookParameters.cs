@@ -4,8 +4,10 @@ namespace BooksApi.Models.Books;
 
 public class BookParameters : QueryStringParameters
 {
-  public BookParameters()
-  {
-    OrderBy = "name";
-  }
+    public BookParameters()
+    {
+        OrderBy = "name";
+    }
+
+    public int Isbn { get; set; }
 }

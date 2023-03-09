@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using BooksApi.Models.Authors;
+﻿using BooksApi.Models.Authors;
 
 namespace BooksApi.Repository.Authors;
 

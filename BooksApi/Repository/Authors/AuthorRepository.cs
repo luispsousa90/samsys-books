@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BooksApi.Repository.Authors;
 
-public class AuthorRepository : Repository<Author>, IAuthorRepository
+public class AuthorRepository : RepositoryBase<Author>, IAuthorRepository
 {
     public AuthorRepository(RepositoryContext repositoryContext) : base(repositoryContext)
     {

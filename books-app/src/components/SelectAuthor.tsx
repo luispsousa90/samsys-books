@@ -37,7 +37,7 @@ export default function BasicSelect({
         <Select
           labelId={labelId}
           id={id}
-          /* value={value} */
+          value={value.toString()}
           label={name}
           onChange={handleChange}
         >

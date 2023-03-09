@@ -18,8 +18,8 @@ export function postBook(book: any) {
   });
 }
 
-export function updateBook(book: any) {
-  return fetch(`${booksAPI}/books`, {
+export function updateBook(id: number, book: any) {
+  return fetch(`${booksAPI}/books/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

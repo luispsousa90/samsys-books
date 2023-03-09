@@ -32,9 +32,9 @@ export default function BookEditForm() {
   let handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const book = { isbn, name, authorId, price };
-    updateBook(book).then((res) => {
+    updateBook(Number(id), book).then((res) => {
       console.log('Res: ', res);
-      if (res.status === 201) {
+      if (res.status === 204) {
         setMessage({ body: 'Book created successfully', error: false });
       } else {
         setMessage({ body: 'Some error occured', error: true });

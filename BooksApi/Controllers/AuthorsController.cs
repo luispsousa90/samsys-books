@@ -1,6 +1,5 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using BooksApi.Models.Authors;
 using BooksApi.Repository;
 
@@ -55,9 +54,9 @@ namespace BooksApi.Controllers
         }
 
         // POST: api/Authors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Author>> PostAuthor([FromBody] AuthorForCreationDto author)
+        public async Task<ActionResult<Author>> PostAuthor([FromBody] AuthorForCreationDto? author)
         {
             try
             {
@@ -75,16 +74,17 @@ namespace BooksApi.Controllers
 
                 return CreatedAtAction("GetAuthor", new { id = createdAuthor.Id }, createdAuthor);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Console.WriteLine("Error: " + ex.Message);
                 return StatusCode(500, "Internal server error");
             }
         }
 
         // PUT: api/Authors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuthor(long id, [FromBody] AuthorForUpdateDto author)
+        public async Task<IActionResult> PutAuthor(long id, [FromBody] AuthorForUpdateDto? author)
         {
             try
             {
@@ -110,8 +110,9 @@ namespace BooksApi.Controllers
 
                 return NoContent();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Console.WriteLine("Error: " + ex.Message);
                 return StatusCode(500, "Internal server error");
             }
         }

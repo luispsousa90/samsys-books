@@ -21,15 +21,15 @@ namespace BooksApi.Repository.Books
             var books = FindAll();
 
             SearchByIsbn(ref books, bookParameters.Isbn);
-            SearchByName(ref books, bookParameters.Name);
             SearchByAuthor(ref books, bookParameters.AuthorId);
+            if (bookParameters.Name != null) SearchByName(ref books, bookParameters.Name);
 
-            ApplySort(ref books, bookParameters.OrderBy);
+            if (bookParameters.OrderBy != null) ApplySort(ref books, bookParameters.OrderBy);
 
             return await PagedList<Book>.ToPagedList(books, bookParameters.PageNumber, bookParameters.PageSize);
         }
 
-        public async Task<Book> GetBookById(long bookId)
+        public async Task<Book?> GetBookById(long bookId)
         {
             return await FindByCondition(book => book.Id == bookId).FirstOrDefaultAsync();
         }
@@ -49,7 +49,7 @@ namespace BooksApi.Repository.Books
             Delete(book);
         }
 
-        private void ApplySort(ref IQueryable<Book> books, string orderByQueryString)
+        private static void ApplySort(ref IQueryable<Book> books, string orderByQueryString)
         {
             if (!books.Any())
                 return;
@@ -78,7 +78,7 @@ namespace BooksApi.Repository.Books
 
                 var sortingOrder = param.EndsWith(" desc") ? "descending" : "ascending";
 
-                orderQueryBuilder.Append($"{objectProperty.Name.ToString()} {sortingOrder}, ");
+                orderQueryBuilder.Append($"{objectProperty.Name} {sortingOrder}, ");
             }
 
             var orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
@@ -92,21 +92,21 @@ namespace BooksApi.Repository.Books
             books = books.OrderBy(orderQuery);
         }
 
-        private void SearchByIsbn(ref IQueryable<Book> books, int isbn)
+        private static void SearchByIsbn(ref IQueryable<Book> books, int isbn)
         {
             if (!books.Any() || isbn == 0)
                 return;
             books = books.Where(o => o.Isbn == isbn);
         }
 
-        private void SearchByName(ref IQueryable<Book> books, string bookName)
+        private static void SearchByName(ref IQueryable<Book> books, string bookName)
         {
             if (!books.Any() || string.IsNullOrWhiteSpace(bookName))
                 return;
             books = books.Where(o => o.Name.ToLower().Contains(bookName.Trim().ToLower()));
         }
 
-        private void SearchByAuthor(ref IQueryable<Book> books, long authorId)
+        private static void SearchByAuthor(ref IQueryable<Book> books, long authorId)
         {
             if (!books.Any() || authorId == 0)
                 return;

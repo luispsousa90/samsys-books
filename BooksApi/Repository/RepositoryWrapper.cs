@@ -7,8 +7,8 @@ namespace BooksApi.Repository;
 public class RepositoryWrapper : IRepositoryWrapper
 {
     private readonly RepositoryContext _repoContext;
-    private IAuthorRepository _author;
-    private IBookRepository _book;
+    private IAuthorRepository? _author;
+    private IBookRepository? _book;
 
     public IBookRepository Book
     {

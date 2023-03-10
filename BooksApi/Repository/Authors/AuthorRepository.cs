@@ -16,12 +16,12 @@ public class AuthorRepository : RepositoryBase<Author>, IAuthorRepository
         return await FindAll().OrderBy(author => author.Name).ToListAsync();
     }
 
-    public async Task<Author> GetAuthorById(long authorId)
+    public async Task<Author?> GetAuthorById(long authorId)
     {
         return await FindByCondition(author => author.Id == authorId).FirstOrDefaultAsync();
     }
 
-    public async Task<Author> GetAuthorWithDetails(long authorId)
+    public async Task<Author?> GetAuthorWithDetails(long authorId)
     {
         return await FindByCondition(author => author.Id == authorId).Include(b => b.Books).FirstOrDefaultAsync();
     }
@@ -34,5 +34,10 @@ public class AuthorRepository : RepositoryBase<Author>, IAuthorRepository
     public void UpdateAuthor(Author author)
     {
         Update(author);
+    }
+
+    public void DeleteAuthor(Author author)
+    {
+        Delete(author);
     }
 }

@@ -1,15 +1,14 @@
 using System.Linq.Expressions;
 using BooksApi.Data;
-using BooksApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksApi.Repository.Shared
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected RepositoryContext RepositoryContext { get; set; }
+        private RepositoryContext RepositoryContext { get; set; }
 
-        public RepositoryBase(RepositoryContext repositoryContext)
+        protected RepositoryBase(RepositoryContext repositoryContext)
         {
             RepositoryContext = repositoryContext;
         }

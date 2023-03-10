@@ -2,23 +2,18 @@ namespace BooksApi.Helpers;
 
 public abstract class QueryStringParameters
 {
-  const int maxPageSize = 50;
-  public int PageNumber { get; set; } = 1;
+    private const int MaxPageSize = 50;
+    public int PageNumber { get; set; } = 1;
 
-  private int _pageSize = 10;
-  public int PageSize
-  {
-    get
+    private int _pageSize = 10;
+
+    public int PageSize
     {
-      return _pageSize;
+        get => _pageSize;
+        set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
     }
-    set
-    {
-      _pageSize = (value > maxPageSize) ? maxPageSize : value;
-    }
-  }
 
-  public string? OrderBy { get; set; }
+    public string? OrderBy { get; set; }
 
-  public string? SearchBy { get; set; }
+    public string? SearchBy { get; set; }
 }

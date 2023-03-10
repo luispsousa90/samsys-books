@@ -43,6 +43,7 @@ public class BooksController : ControllerBase
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Error: " + ex.Message);
             return StatusCode(500, "Internal server error");
         }
     }
@@ -63,14 +64,15 @@ public class BooksController : ControllerBase
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Error: " + ex.Message);
             return StatusCode(500, "Internal server error");
         }
     }
 
     // POST: api/Books
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Book>> PostBook([FromBody] BookForCreationDto book)
+    public async Task<ActionResult<Book>> PostBook([FromBody] BookForCreationDto? book)
     {
         try
         {
@@ -90,15 +92,16 @@ public class BooksController : ControllerBase
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Error: " + ex.Message);
             return StatusCode(500, "Internal server error");
         }
     }
 
 
     // PUT: api/Books/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id:long}")]
-    public async Task<IActionResult> PutBook(long id, [FromBody] BookForUpdateDto book)
+    public async Task<IActionResult> PutBook(long id, [FromBody] BookForUpdateDto? book)
     {
         try
         {
@@ -126,6 +129,7 @@ public class BooksController : ControllerBase
         }
         catch (Exception ex)
         {
+            Console.WriteLine("Error: " + ex.Message);
             return StatusCode(500, "Internal server error");
         }
     }
@@ -147,9 +151,9 @@ public class BooksController : ControllerBase
 
             return NoContent();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            Console.WriteLine(e);
+            Console.WriteLine("Error: " + ex.Message);
             return StatusCode(500, "Internal server error");
         }
     }

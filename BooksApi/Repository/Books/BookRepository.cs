@@ -21,6 +21,8 @@ namespace BooksApi.Repository.Books
             var books = FindAll();
 
             SearchByIsbn(ref books, bookParameters.Isbn);
+            SearchByName(ref books, bookParameters.Name);
+            SearchByAuthor(ref books, bookParameters.AuthorId);
 
             ApplySort(ref books, bookParameters.OrderBy);
 
@@ -92,9 +94,23 @@ namespace BooksApi.Repository.Books
 
         private void SearchByIsbn(ref IQueryable<Book> books, int isbn)
         {
-            if (!books.Any() || isbn == null || isbn == 0)
+            if (!books.Any() || isbn == 0)
                 return;
             books = books.Where(o => o.Isbn == isbn);
+        }
+
+        private void SearchByName(ref IQueryable<Book> books, string bookName)
+        {
+            if (!books.Any() || string.IsNullOrWhiteSpace(bookName))
+                return;
+            books = books.Where(o => o.Name.ToLower().Contains(bookName.Trim().ToLower()));
+        }
+
+        private void SearchByAuthor(ref IQueryable<Book> books, long authorId)
+        {
+            if (!books.Any() || authorId == 0)
+                return;
+            books = books.Where(o => o.AuthorId == authorId);
         }
     }
 }

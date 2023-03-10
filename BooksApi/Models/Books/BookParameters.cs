@@ -10,4 +10,6 @@ public class BookParameters : QueryStringParameters
     }
 
     public int Isbn { get; set; }
+    public string? Name { get; set; }
+    public long AuthorId { get; set; }
 }

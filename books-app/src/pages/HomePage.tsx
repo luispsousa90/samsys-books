@@ -6,6 +6,7 @@ import MainLayout from '../layouts/MainLayout';
 // Components
 import Table from '../components/Table';
 import TablePagination from '../components/TablePagination';
+import Search from '../components/Search';
 // Services
 import { getBooks } from '../services/BookService';
 
@@ -17,6 +18,7 @@ export default function HomePage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [term, setTerm] = useState('');
 
   useEffect(() => {
     getBooks('', rowsPerPage, page).then((data) => {
@@ -32,6 +34,7 @@ export default function HomePage() {
   return (
     <MainLayout>
       <>
+        <Search term={term} setTerm={setTerm} id='search-term' label='Search' />
         <Table items={books} headers={bookHeaders} />
         <TablePagination
           page={page}

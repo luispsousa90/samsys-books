@@ -9,4 +9,5 @@ public class Book
     [Required] public string Name { get; set; } = null!;
     [Required] public long AuthorId { get; set; }
     [Range(0, 99999)] [Required] public decimal Price { get; set; }
+    public bool Deleted { get; set; }
 }

@@ -17,7 +17,8 @@ public class RepositoryContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Book>()
-            .HasIndex(u => u.Isbn)
+            .HasIndex(b => b.Isbn)
             .IsUnique();
+        builder.Entity<Book>().HasQueryFilter(b => !b.Deleted);
     }
 }

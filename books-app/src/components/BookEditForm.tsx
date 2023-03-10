@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Services
-import { getBookById, updateBook } from '../services/books';
-import { getAuthors } from '../services/authors';
+import { getBookById, updateBook } from '../services/BookService';
+import { getAuthors } from '../services/AuthorService';
 
 // Components
 import SelectAuthor from './SelectAuthor';

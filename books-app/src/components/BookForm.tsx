@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 // Components
 import SelectAuthor from '../components/SelectAuthor';
 // Service
-import { postBook } from '../services/books';
-import { getAuthors } from '../services/authors';
-
+import { postBook } from '../services/BookService';
+import { getAuthors } from '../services/AuthorService';
+// types
+import BookCreate from '../types/Book/BookCreate';
 // MUI
 import { Box, Grid, TextField, Button, Alert } from '@mui/material';
 
@@ -22,7 +23,7 @@ export default function BookForm() {
 
   let handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const book = { isbn, name, authorId, price };
+    const book: BookCreate = { isbn, name, authorId, price };
     postBook(book).then((res) => {
       console.log('Res: ', res);
       if (res.status === 201) {

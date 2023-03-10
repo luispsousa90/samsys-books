@@ -4,10 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-interface Author {
-  id: number;
-  name: string;
-}
+import Author from '../types/Author';
 
 interface ISelectProps {
   id: string;

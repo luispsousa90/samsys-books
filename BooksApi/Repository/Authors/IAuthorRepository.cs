@@ -8,5 +8,5 @@ public interface IAuthorRepository : IRepositoryBase<Author>
     Task<Author> GetAuthorById(long authorId);
     Task<Author> GetAuthorWithDetails(long authorId);
     void CreateAuthor(Author author);
-    void UpdateAuthor(long id, Author author);
+    void UpdateAuthor(Author author);
 }

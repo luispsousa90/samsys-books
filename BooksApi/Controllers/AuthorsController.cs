@@ -54,55 +54,71 @@ namespace BooksApi.Controllers
             return Ok(authorResult);
         }
 
-        // PUT: api/Authors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        /*[HttpPut("{id}")]
-        public async Task<IActionResult> PutAuthor(long id, Author author)
-        {
-            if (id != author.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(author).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AuthorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Authors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Author>> PostAuthor(Author author)
+        public async Task<ActionResult<Author>> PostAuthor([FromBody] AuthorForCreationDto author)
         {
-            if (_context.Authors == null)
+            try
             {
-                return Problem("Entity set 'RepositoryContext.Authors'  is null.");
+                if (author == null)
+                {
+                    return BadRequest();
+                }
+
+                var authorEntity = _mapper.Map<Author>(author);
+
+                _repo.Author.CreateAuthor(authorEntity);
+                await _repo.SaveAsync();
+
+                var createdAuthor = _mapper.Map<AuthorDto>(authorEntity);
+
+                return CreatedAtAction("GetAuthor", new { id = createdAuthor.Id }, createdAuthor);
             }
-
-            _context.Authors.Add(author);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
+        // PUT: api/Authors/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAuthor(long id, [FromBody] AuthorForUpdateDto author)
+        {
+            try
+            {
+                if (author == null)
+                {
+                    return BadRequest();
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+
+                var authorEntity = await _repo.Author.GetAuthorById(id);
+                if (authorEntity == null)
+                {
+                    return NotFound();
+                }
+
+                _mapper.Map(author, authorEntity);
+                _repo.Author.UpdateAuthor(authorEntity);
+                await _repo.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+
         // DELETE: api/Authors/5
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthor(long id)
         {
             if (_context.Authors == null)

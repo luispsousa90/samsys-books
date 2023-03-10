@@ -31,7 +31,7 @@ public class AuthorRepository : RepositoryBase<Author>, IAuthorRepository
         Create(author);
     }
 
-    public void UpdateAuthor(long id, Author author)
+    public void UpdateAuthor(Author author)
     {
         Update(author);
     }

@@ -6,9 +6,10 @@ import MainLayout from '../layouts/MainLayout';
 // Components
 import Table from '../components/Table';
 import TablePagination from '../components/TablePagination';
-import Search from '../components/Search';
+import BookSearchForm from '../components/BookSearchForm';
 // Services
 import { getBooks } from '../services/BookService';
+import { getAuthors } from '../services/AuthorService';
 
 const bookHeaders = ['ID', 'ISBN', 'Title', 'Author', 'Price'];
 
@@ -18,23 +19,40 @@ export default function HomePage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [term, setTerm] = useState('');
+  const [name, setName] = useState('');
+  const [isbn, setIsbn] = useState(0);
+  const [authorId, setAuthorId] = useState(0);
+  const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
     getBooks('', rowsPerPage, page).then((data) => {
       setBooks(data.data);
       setTotalPages(data.headers.TotalCount);
     });
+    getAuthors().then((data) => setAuthors(data));
+  }, [page, rowsPerPage]);
 
-    console.log(
-      `page: ${page}, rowsPerPage: ${rowsPerPage}, total: ${totalPages}`
-    );
-  }, [page, rowsPerPage, totalPages]);
+  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    getBooks('', rowsPerPage, page, isbn, name, authorId).then((data) => {
+      setBooks(data.data);
+      setTotalPages(data.headers.TotalCount);
+    });
+  };
 
   return (
     <MainLayout>
       <>
-        <Search term={term} setTerm={setTerm} id='search-term' label='Search' />
+        <BookSearchForm
+          isbn={isbn}
+          setIsbn={setIsbn}
+          name={name}
+          setName={setName}
+          authors={authors}
+          authorId={authorId}
+          setAuthorId={setAuthorId}
+          handleSearch={handleSearch}
+        />
         <Table items={books} headers={bookHeaders} />
         <TablePagination
           page={page}

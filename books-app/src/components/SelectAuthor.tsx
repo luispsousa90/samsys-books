@@ -1,10 +1,9 @@
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import Author from '../types/Author';
+import Author from '../types/Author/Author';
 
 interface ISelectProps {
   id: string;
@@ -28,23 +27,22 @@ export default function BasicSelect({
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id={labelId}>{name}</InputLabel>
-        <Select
-          labelId={labelId}
-          id={id}
-          value={value.toString()}
-          label={name}
-          onChange={handleChange}
-        >
-          {items.map((item) => (
-            <MenuItem key={item.id} value={item.id}>
-              {item.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <FormControl fullWidth>
+      <InputLabel id={labelId}>{name}</InputLabel>
+      <Select
+        labelId={labelId}
+        id={id}
+        value={value.toString()}
+        label={name}
+        onChange={handleChange}
+      >
+        <MenuItem value={0}>All</MenuItem>
+        {items.map((item) => (
+          <MenuItem key={item.id} value={item.id}>
+            {item.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }

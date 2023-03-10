@@ -33,9 +33,8 @@ export default function BookEditForm() {
     e.preventDefault();
     const book = { isbn, name, authorId, price };
     updateBook(Number(id), book).then((res) => {
-      console.log('Res: ', res);
       if (res.status === 204) {
-        setMessage({ body: 'Book created successfully', error: false });
+        setMessage({ body: 'Book edited successfully', error: false });
       } else {
         setMessage({ body: 'Some error occured', error: true });
       }

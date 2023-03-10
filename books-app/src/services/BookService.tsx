@@ -5,12 +5,15 @@ import BookCreate from '../types/Book/BookCreate';
 const getBooks = async (
   orderBy: string = '',
   pageSize: number = 3,
-  pageNumber: number = 1
+  pageNumber: number = 1,
+  isbn: number = 0,
+  name: string = '',
+  authorid: number = 0
 ) => {
   const { data, headers } = await axios.get(
     `${booksAPI}/books?orderBy=${orderBy}&pageSize=${pageSize}&pageNumber=${
       pageNumber + 1
-    }`
+    }&isbn=${isbn}&name=${name}&authorid=${authorid}`
   );
   return { data, headers: JSON.parse(headers['x-pagination']) };
 };

@@ -25,7 +25,6 @@ export default function BookForm() {
     e.preventDefault();
     const book: BookCreate = { isbn, name, authorId, price };
     postBook(book).then((res) => {
-      console.log('Res: ', res);
       if (res.status === 201) {
         setIsbn(0);
         setName('');

@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Services
-import { getBookById, updateBook } from '../services/BookService';
-import { getAuthors } from '../services/AuthorService';
+import { getBookById, updateBook } from '../../services/BookService';
+import { getAuthors } from '../../services/AuthorService';
 
 // Components
-import SelectAuthor from './SelectAuthor';
+import SelectAuthor from '../Select/SelectAuthor';
 
 export default function BookEditForm() {
   const [authors, setAuthors] = useState([]);

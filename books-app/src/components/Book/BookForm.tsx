@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 // Components
-import SelectAuthor from '../components/SelectAuthor';
+import SelectAuthor from '../Select/SelectAuthor';
 // Service
-import { postBook } from '../services/BookService';
-import { getAuthors } from '../services/AuthorService';
+import { postBook } from '../../services/BookService';
+import { getAuthors } from '../../services/AuthorService';
 // types
-import BookCreate from '../types/Book/BookCreate';
+import BookCreate from '../../types/Book/BookCreate';
 // MUI
 import { Box, Grid, TextField, Button, Alert } from '@mui/material';
 

@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 // Layout
 import MainLayout from '../layouts/MainLayout';
 // Components
-import BookEditForm from '../components/BookEditForm';
+import BookEditForm from '../components/Book/BookEditForm';
 
 export default function EditBookPage() {
   return (

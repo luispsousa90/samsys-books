@@ -9,9 +9,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Link } from 'react-router-dom';
 
-import Book from '../types/Book/Book';
+import Book from '../../types/Book/Book';
 
-import ModalDelete from '../components/ModalDelete';
+import ModalDelete from '../ModalDelete';
 
 interface ITableProps {
   items: Book[];

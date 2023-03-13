@@ -4,9 +4,9 @@ import Button from '@mui/material/Button';
 // Layout
 import MainLayout from '../layouts/MainLayout';
 // Components
-import Table from '../components/Table';
-import TablePagination from '../components/TablePagination';
-import BookSearchForm from '../components/BookSearchForm';
+import Table from '../components/Table/Table';
+import TablePagination from '../components/Table/TablePagination';
+import BookSearchForm from '../components/Book/BookSearchForm';
 // Services
 import { getBooks } from '../services/BookService';
 import { getAuthors } from '../services/AuthorService';
@@ -24,6 +24,8 @@ export default function HomePage() {
   const [isbn, setIsbn] = useState(0);
   const [authorId, setAuthorId] = useState(0);
   const [authors, setAuthors] = useState([]);
+  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState('asc');
 
   useEffect(() => {
     getBooks('', rowsPerPage, page).then((data) => {
@@ -35,7 +37,14 @@ export default function HomePage() {
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    getBooks('', rowsPerPage, page, isbn, name, authorId).then((data) => {
+    getBooks(
+      `${orderBy} ${order}`,
+      rowsPerPage,
+      page,
+      isbn,
+      name,
+      authorId
+    ).then((data) => {
       setBooks(data.data);
       setTotalPages(data.headers.TotalCount);
     });
@@ -44,7 +53,14 @@ export default function HomePage() {
   const handleDelete = (id: number) => {
     deleteBook(id).then((res) => {
       if (res.status === 204) {
-        getBooks('', rowsPerPage, page, isbn, name, authorId).then((data) => {
+        getBooks(
+          `${orderBy} ${order}`,
+          rowsPerPage,
+          page,
+          isbn,
+          name,
+          authorId
+        ).then((data) => {
           setBooks(data.data);
           setTotalPages(data.headers.TotalCount);
         });
@@ -64,6 +80,10 @@ export default function HomePage() {
           authorId={authorId}
           setAuthorId={setAuthorId}
           handleSearch={handleSearch}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          order={order}
+          setOrder={setOrder}
         />
         <Table
           items={books}

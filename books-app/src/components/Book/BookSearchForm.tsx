@@ -3,8 +3,9 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 // Components
-import SelectAuthor from './SelectAuthor';
-import Author from '../types/Author/Author';
+import SelectAuthor from '../Select/SelectAuthor';
+import Author from '../../types/Author/Author';
+import Select from '../Select/SelectOrder';
 
 interface ISearchProps {
   isbn: number;
@@ -15,6 +16,10 @@ interface ISearchProps {
   authorId: number;
   setAuthorId: (value: number) => void;
   handleSearch: (event: React.FormEvent<HTMLFormElement>) => void;
+  orderBy: string;
+  setOrderBy: (value: string) => void;
+  order: string;
+  setOrder: (value: string) => void;
 }
 
 export default function BookSearchForm({
@@ -25,7 +30,11 @@ export default function BookSearchForm({
   authors,
   authorId,
   setAuthorId,
+  orderBy,
+  setOrderBy,
   handleSearch,
+  order,
+  setOrder,
 }: ISearchProps) {
   return (
     <Box
@@ -64,6 +73,15 @@ export default function BookSearchForm({
         items={authors}
         value={authorId}
         setValue={setAuthorId}
+      />
+      <Select
+        id='ordeyBy-id'
+        labelId='orderBy-labelId'
+        label='OrderBy'
+        data={orderBy}
+        setData={setOrderBy}
+        order={order}
+        setOrder={setOrder}
       />
       <Button type='submit' variant='contained' size='large' sx={{ ml: 2 }}>
         Search

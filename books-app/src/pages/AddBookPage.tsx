@@ -1,5 +1,5 @@
 //Components
-import BookForm from '../components/BookForm';
+import BookForm from '../components/Book/BookForm';
 
 import Typography from '@mui/material/Typography';
 import MainLayout from '../layouts/MainLayout';

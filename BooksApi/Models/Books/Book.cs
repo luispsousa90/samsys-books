@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using BooksApi.Models.Authors;
 using BooksApi.Repository.Shared;
 
 
@@ -11,5 +12,7 @@ public class Book : ISoftDeletable
     [Required] public string Name { get; set; } = null!;
     [Required] public long AuthorId { get; set; }
     [Range(0, 99999)] [Required] public decimal Price { get; set; }
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; } = false;
+
+    public virtual Author Author { get; set; }
 }

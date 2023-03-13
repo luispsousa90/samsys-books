@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using BooksApi.Data;
+using BooksApi.Models.Books;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksApi.Repository.Shared
@@ -16,6 +17,13 @@ namespace BooksApi.Repository.Shared
         public IQueryable<T> FindAll()
         {
             return RepositoryContext.Set<T>().AsNoTracking();
+        }
+
+        public IQueryable<Book> FindAllWithAuthors()
+        {
+            return RepositoryContext.Books
+                .Include(book => book.Author)
+                .AsNoTracking();
         }
 
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)

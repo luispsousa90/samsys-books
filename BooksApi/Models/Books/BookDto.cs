@@ -1,4 +1,6 @@
-﻿namespace BooksApi.Models.Books;
+﻿using BooksApi.Models.Authors;
+
+namespace BooksApi.Models.Books;
 
 public class BookDto
 {
@@ -7,4 +9,5 @@ public class BookDto
     public string Name { get; set; } = null!;
     public long AuthorId { get; set; }
     public decimal Price { get; set; }
+    public string AuthorName { get; set; }
 }

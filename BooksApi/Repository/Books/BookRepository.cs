@@ -18,7 +18,7 @@ namespace BooksApi.Repository.Books
 
         public async Task<PagedList<Book>> GetAllBooks(BookParameters bookParameters)
         {
-            var books = FindAll();
+            var books = FindAllWithAuthors();
 
             SearchByIsbn(ref books, bookParameters.Isbn);
             SearchByAuthor(ref books, bookParameters.AuthorId);

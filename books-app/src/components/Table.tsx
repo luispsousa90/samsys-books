@@ -50,7 +50,7 @@ export default function BasicTable({
                 </TableCell>
                 <TableCell>{book.isbn}</TableCell>
                 <TableCell>{book.name}</TableCell>
-                <TableCell>{book.authorId}</TableCell>
+                <TableCell>{book.authorName}</TableCell>
                 <TableCell>{book.price}</TableCell>
                 <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
                   <Link to={`/book/edit/${book.id}`}>

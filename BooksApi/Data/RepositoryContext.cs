@@ -19,6 +19,6 @@ public class RepositoryContext : DbContext
         builder.Entity<Book>()
             .HasIndex(b => b.Isbn)
             .IsUnique();
-        builder.Entity<Book>().HasQueryFilter(b => !b.Deleted);
+        builder.Entity<Book>().HasQueryFilter(b => !b.IsDeleted);
     }
 }

@@ -10,5 +10,6 @@ namespace BooksApi.Repository.Books
         void CreateBook(Book book);
         void UpdateBook(Book book);
         void DeleteBook(Book book);
+        void SoftDeleteBook(Book book);
     }
 }

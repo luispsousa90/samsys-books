@@ -135,7 +135,7 @@ public class BooksController : ControllerBase
     }
 
     // DELETE: api/Books/5
-    [HttpDelete("{id:long}")]
+    [HttpDelete("{id:long}/hard")]
     public async Task<IActionResult> DeleteBook(long id)
     {
         try
@@ -147,6 +147,30 @@ public class BooksController : ControllerBase
             }
 
             _repo.Book.DeleteBook(book);
+            await _repo.SaveAsync();
+
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+            return StatusCode(500, "Internal server error");
+        }
+    }
+
+    // DELETE: api/Books/5
+    [HttpDelete("{id:long}")]
+    public async Task<IActionResult> SoftDeleteBook(long id)
+    {
+        try
+        {
+            var book = await _repo.Book.GetBookById(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            _repo.Book.SoftDeleteBook(book);
             await _repo.SaveAsync();
 
             return NoContent();

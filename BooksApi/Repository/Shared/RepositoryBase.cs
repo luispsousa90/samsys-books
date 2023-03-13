@@ -37,5 +37,20 @@ namespace BooksApi.Repository.Shared
         {
             RepositoryContext.Set<T>().Remove(entity);
         }
+
+        public void SoftDelete(T entity)
+        {
+            if (entity is ISoftDeletable softDeletableEntity)
+            {
+                // If the entity implements the ISoftDeletable interface, update its IsDeleted property
+                softDeletableEntity.IsDeleted = true;
+                RepositoryContext.Set<T>().Update(entity);
+            }
+            else
+            {
+                // Otherwise, throw an exception
+                throw new InvalidOperationException("The entity does not implement the ISoftDeletable interface.");
+            }
+        }
     }
 }

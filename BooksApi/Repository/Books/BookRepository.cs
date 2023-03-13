@@ -49,6 +49,11 @@ namespace BooksApi.Repository.Books
             Delete(book);
         }
 
+        public void SoftDeleteBook(Book book)
+        {
+            SoftDelete(book);
+        }
+
         private static void ApplySort(ref IQueryable<Book> books, string orderByQueryString)
         {
             if (!books.Any())

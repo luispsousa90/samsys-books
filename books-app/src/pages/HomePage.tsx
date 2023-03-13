@@ -10,6 +10,7 @@ import BookSearchForm from '../components/BookSearchForm';
 // Services
 import { getBooks } from '../services/BookService';
 import { getAuthors } from '../services/AuthorService';
+import { deleteBook } from '../services/BookService';
 
 const bookHeaders = ['ID', 'ISBN', 'Title', 'Author', 'Price'];
 
@@ -40,6 +41,17 @@ export default function HomePage() {
     });
   };
 
+  const handleDelete = (id: number) => {
+    deleteBook(id).then((res) => {
+      if (res.status === 204) {
+        getBooks('', rowsPerPage, page, isbn, name, authorId).then((data) => {
+          setBooks(data.data);
+          setTotalPages(data.headers.TotalCount);
+        });
+      }
+    });
+  };
+
   return (
     <MainLayout>
       <>
@@ -53,7 +65,11 @@ export default function HomePage() {
           setAuthorId={setAuthorId}
           handleSearch={handleSearch}
         />
-        <Table items={books} headers={bookHeaders} />
+        <Table
+          items={books}
+          headers={bookHeaders}
+          handleDelete={handleDelete}
+        />
         <TablePagination
           page={page}
           setPage={setPage}

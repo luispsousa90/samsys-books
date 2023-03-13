@@ -31,4 +31,8 @@ const updateBook = async (id: number, book: BookCreate) => {
   return await axios.put(`${booksAPI}/books/${id}`, book);
 };
 
-export { getBooks, getBookById, postBook, updateBook };
+const deleteBook = async (id: number) => {
+  return await axios.delete(`${booksAPI}/books/${id}`);
+};
+
+export { getBooks, getBookById, postBook, updateBook, deleteBook };

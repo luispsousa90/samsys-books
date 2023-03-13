@@ -11,12 +11,19 @@ import { Link } from 'react-router-dom';
 
 import Book from '../types/Book/Book';
 
+import ModalDelete from '../components/ModalDelete';
+
 interface ITableProps {
   items: Book[];
   headers: string[];
+  handleDelete: (id: number) => void;
 }
 
-export default function BasicTable({ items, headers }: ITableProps) {
+export default function BasicTable({
+  items,
+  headers,
+  handleDelete,
+}: ITableProps) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -45,13 +52,15 @@ export default function BasicTable({ items, headers }: ITableProps) {
                 <TableCell>{book.name}</TableCell>
                 <TableCell>{book.authorId}</TableCell>
                 <TableCell>{book.price}</TableCell>
-                <TableCell>
+                <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
                   <Link to={`/book/edit/${book.id}`}>
                     <EditIcon color='action' />
                   </Link>
-                  <Link to={`/book/edit/${book.id}`}>
-                    <DeleteForeverIcon color='action' sx={{ ml: 2 }} />
-                  </Link>
+                  <ModalDelete
+                    id={book.id}
+                    handleDelete={handleDelete}
+                    openText={<DeleteForeverIcon color='action' />}
+                  />
                 </TableCell>
               </TableRow>
             ))}

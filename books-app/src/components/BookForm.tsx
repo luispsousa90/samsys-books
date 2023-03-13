@@ -23,7 +23,7 @@ export default function BookForm() {
 
   let handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const book: BookCreate = { isbn, name, authorId, price };
+    const book: BookCreate = { isbn, name, authorId, price, isDeleted: false };
     postBook(book).then((res) => {
       if (res.status === 201) {
         setIsbn(0);

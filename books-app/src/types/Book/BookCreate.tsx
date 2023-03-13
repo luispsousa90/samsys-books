@@ -1,6 +1,5 @@
-export default interface BookCreate {
-  isbn: number;
-  name: string;
-  authorId: number;
-  price: number;
-}
+import Book from './Book';
+
+type BookCreate = Omit<Book, 'id'>;
+
+export default BookCreate;

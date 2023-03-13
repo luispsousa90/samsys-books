@@ -4,4 +4,5 @@ export default interface Book {
   name: string;
   authorId: number;
   price: number;
+  isDeleted: boolean;
 }

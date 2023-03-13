@@ -31,7 +31,7 @@ export default function BookEditForm() {
 
   let handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const book = { isbn, name, authorId, price };
+    const book = { isbn, name, authorId, price, isDeleted: false };
     updateBook(Number(id), book).then((res) => {
       if (res.status === 204) {
         setMessage({ body: 'Book edited successfully', error: false });

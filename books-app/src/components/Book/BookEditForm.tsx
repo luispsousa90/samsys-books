@@ -1,6 +1,11 @@
 import { Alert, Box, Button, Grid, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Helpers
+import Toast from '../../helpers/Toast';
 
 // Services
 import { getBookById, updateBook } from '../../services/BookService';
@@ -39,8 +44,10 @@ export default function BookEditForm() {
     (async () => {
       const res = await updateBook(Number(id), book);
       if (res.status === 204) {
+        Toast.Show('success', 'Book edited successfully');
         setMessage({ body: 'Book edited successfully', error: false });
       } else {
+        Toast.Show('error', 'Cannot edit book');
         setMessage({ body: 'Some error occured', error: true });
       }
     })();
@@ -105,12 +112,13 @@ export default function BookEditForm() {
       <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
         Submit
       </Button>
-      {message.body &&
+      <ToastContainer />
+      {/* {message.body &&
         (message.error ? (
           <Alert severity='error'>{message.body}</Alert>
         ) : (
           <Alert severity='success'>{message.body}</Alert>
-        ))}
+        ))} */}
     </Box>
   );
 }

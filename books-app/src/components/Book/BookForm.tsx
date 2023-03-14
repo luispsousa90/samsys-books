@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Box, Grid, TextField, Button, Alert } from '@mui/material';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Components
 import SelectAuthor from '../Select/SelectAuthor';
 // Service
@@ -6,8 +9,8 @@ import { postBook } from '../../services/BookService';
 import { getAuthors } from '../../services/AuthorService';
 // types
 import BookCreate from '../../types/Book/BookCreate';
-// MUI
-import { Box, Grid, TextField, Button, Alert } from '@mui/material';
+// Helpers
+import Toast from '../../helpers/Toast';
 
 export default function BookForm() {
   const [authors, setAuthors] = useState([]);
@@ -35,8 +38,10 @@ export default function BookForm() {
         setAuthorId(0);
         setPrice(0);
         setMessage({ body: 'Book created successfully', error: false });
+        Toast.Show('success', 'Book added successfully');
       } else {
         setMessage({ body: 'Some error occured', error: true });
+        Toast.Show('error', 'Cannot add book');
       }
     })();
   };
@@ -100,12 +105,13 @@ export default function BookForm() {
       <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
         Submit
       </Button>
-      {message.body &&
+      {/* {message.body &&
         (message.error ? (
           <Alert severity='error'>{message.body}</Alert>
         ) : (
           <Alert severity='success'>{message.body}</Alert>
-        ))}
+        ))} */}
+      <ToastContainer />
     </Box>
   );
 }

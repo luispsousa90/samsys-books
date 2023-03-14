@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Column, useTable } from 'react-table';
+import { Link } from 'react-router-dom';
 import Book from '../../types/Book/Book';
 
 interface ITableReactProps {
@@ -56,6 +57,16 @@ export default function TableReact(props: ITableReactProps) {
                 {column.render('Header')}
               </th>
             ))}
+            <th
+              style={{
+                borderBottom: 'solid 3px red',
+                background: 'aliceblue',
+                color: 'black',
+                fontWeight: 'bold',
+              }}
+            >
+              Actions
+            </th>
           </tr>
         ))}
       </thead>
@@ -78,6 +89,15 @@ export default function TableReact(props: ITableReactProps) {
                   </td>
                 );
               })}
+              <td
+                style={{
+                  padding: '10px',
+                  border: 'solid 1px gray',
+                  background: 'papayawhip',
+                }}
+              >
+                <Link to={`/book/edit/${row.original.id}`}>Edit</Link>
+              </td>
             </tr>
           );
         })}

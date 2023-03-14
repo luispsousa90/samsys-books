@@ -1,8 +1,10 @@
 import { Alert, Box, Button, Grid, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import Message from '../../types/Message';
 
 // Helpers
 import Toast from '../../helpers/Toast';
@@ -20,9 +22,10 @@ export default function BookEditForm() {
   const [name, setName] = useState('');
   const [authorId, setAuthorId] = useState(0);
   const [price, setPrice] = useState(0);
-  const [message, setMessage] = useState({ body: '', error: false });
+  const [message, setMessage] = useState<Message>();
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -46,6 +49,7 @@ export default function BookEditForm() {
       if (res.status === 204) {
         Toast.Show('success', 'Book edited successfully');
         setMessage({ body: 'Book edited successfully', error: false });
+        setTimeout(() => navigate('/'), 5500);
       } else {
         Toast.Show('error', 'Cannot edit book');
         setMessage({ body: 'Some error occured', error: true });

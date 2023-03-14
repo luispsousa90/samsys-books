@@ -7,10 +7,12 @@ import MainLayout from '../layouts/MainLayout';
 import Table from '../components/Table/Table';
 import TablePagination from '../components/Table/TablePagination';
 import BookSearchForm from '../components/Book/BookSearchForm';
+import TableReact from '../components/Table/TableReact';
 // Services
 import { getBooks } from '../services/BookService';
 import { getAuthors } from '../services/AuthorService';
 import { deleteBook } from '../services/BookService';
+import { Typography } from '@mui/material';
 
 const bookHeaders = ['ID', 'ISBN', 'Title', 'Author', 'Price'];
 
@@ -109,6 +111,10 @@ export default function HomePage() {
             Add Book
           </Button>
         </Link>
+        <Typography variant='h3' align='center' gutterBottom>
+          Using react-table
+        </Typography>
+        <TableReact data={books} />
       </>
     </MainLayout>
   );

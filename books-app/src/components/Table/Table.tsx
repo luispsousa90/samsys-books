@@ -16,7 +16,7 @@ import ModalDelete from '../ModalDelete';
 interface ITableProps {
   items: Book[];
   headers: string[];
-  handleDelete: (id: number) => void;
+  handleDelete: (id: string) => void;
 }
 
 export default function BasicTable({

@@ -18,8 +18,8 @@ const style = {
 
 interface IDeleteModalProps {
   openText: string | JSX.Element;
-  id: number;
-  handleDelete: (id: number) => void;
+  id: string;
+  handleDelete: (id: string) => void;
 }
 
 export default function BasicModal({

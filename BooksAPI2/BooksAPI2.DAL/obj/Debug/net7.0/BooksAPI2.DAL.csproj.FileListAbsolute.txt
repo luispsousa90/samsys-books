@@ -1,0 +1,17 @@
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\bin\Debug\net7.0\BooksAPI2.DAL.deps.json
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\bin\Debug\net7.0\BooksAPI2.DAL.dll
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\bin\Debug\net7.0\BooksAPI2.DAL.pdb
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\bin\Debug\net7.0\BooksAPI2.Infrastructure.dll
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\bin\Debug\net7.0\BooksAPI2.Infrastructure.pdb
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.csproj.AssemblyReference.cache
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.AssemblyInfoInputs.cache
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.AssemblyInfo.cs
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.csproj.CopyComplete
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.dll
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\refint\BooksAPI2.DAL.dll
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.pdb
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\ref\BooksAPI2.DAL.dll
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\bin\Debug\net7.0\BooksAPI2.DAL.runtimeconfig.json
+C:\Users\Luis\Documents\Samsys\samsys-books\BooksAPI2\BooksAPI2.DAL\obj\Debug\net7.0\BooksAPI2.DAL.genruntimeconfig.cache

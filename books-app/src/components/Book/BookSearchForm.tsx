@@ -13,8 +13,8 @@ interface ISearchProps {
   name: string;
   setName: (value: string) => void;
   authors: Author[];
-  authorId: number;
-  setAuthorId: (value: number) => void;
+  authorId: string;
+  setAuthorId: (value: string) => void;
   handleSearch: (event: React.FormEvent<HTMLFormElement>) => void;
   orderBy: string;
   setOrderBy: (value: string) => void;

@@ -1,8 +1,8 @@
 export default interface Book {
-  id: number;
+  id: string;
   isbn: number;
   name: string;
-  authorId: number;
+  authorId: string;
   authorName: string;
   price: number;
   isDeleted: boolean;

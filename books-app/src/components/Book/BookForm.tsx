@@ -16,7 +16,7 @@ export default function BookForm() {
   const [authors, setAuthors] = useState([]);
   const [isbn, setIsbn] = useState(0);
   const [name, setName] = useState('');
-  const [authorId, setAuthorId] = useState(0);
+  const [authorId, setAuthorId] = useState('');
   const [price, setPrice] = useState(0);
   const [message, setMessage] = useState({ body: '', error: false });
 
@@ -35,7 +35,7 @@ export default function BookForm() {
       if (res.status === 201) {
         setIsbn(0);
         setName('');
-        setAuthorId(0);
+        setAuthorId('');
         setPrice(0);
         setMessage({ body: 'Book created successfully', error: false });
         Toast.Show('success', 'Book added successfully');

@@ -9,8 +9,8 @@ interface ISelectProps {
   id: string;
   labelId: string;
   name: string;
-  value: number;
-  setValue: (value: number) => void;
+  value: string;
+  setValue: (value: string) => void;
   items: Author[];
 }
 
@@ -23,7 +23,7 @@ export default function BasicSelect({
   items,
 }: ISelectProps) {
   const handleChange = (event: SelectChangeEvent) => {
-    setValue(Number(event.target.value));
+    setValue(event.target.value);
   };
 
   return (

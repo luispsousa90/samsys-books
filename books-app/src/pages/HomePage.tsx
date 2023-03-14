@@ -24,7 +24,7 @@ export default function HomePage() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [name, setName] = useState('');
   const [isbn, setIsbn] = useState(0);
-  const [authorId, setAuthorId] = useState(0);
+  const [authorId, setAuthorId] = useState('');
   const [authors, setAuthors] = useState([]);
   const [orderBy, setOrderBy] = useState('');
   const [order, setOrder] = useState('asc');
@@ -57,7 +57,7 @@ export default function HomePage() {
     })();
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     (async () => {
       const res = await deleteBook(id);
       if (res.status === 204) {

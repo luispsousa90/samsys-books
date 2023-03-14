@@ -20,11 +20,13 @@ export default function BookEditForm() {
   const [authors, setAuthors] = useState([]);
   const [isbn, setIsbn] = useState(0);
   const [name, setName] = useState('');
-  const [authorId, setAuthorId] = useState(0);
+  const [authorId, setAuthorId] = useState('');
   const [price, setPrice] = useState(0);
   const [message, setMessage] = useState<Message>();
 
-  const { id } = useParams();
+  const params = useParams();
+  const id = params.id as string;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function BookEditForm() {
       setAuthors(authors);
     })();
     (async () => {
-      const book = await getBookById(Number(id));
+      const book = await getBookById(id);
       setIsbn(book.isbn);
       setName(book.name);
       setAuthorId(book.authorId);
@@ -45,7 +47,7 @@ export default function BookEditForm() {
     e.preventDefault();
     const book = { isbn, name, authorId, price, isDeleted: false };
     (async () => {
-      const res = await updateBook(Number(id), book);
+      const res = await updateBook(id, book);
       if (res.status === 204) {
         Toast.Show('success', 'Book edited successfully');
         setMessage({ body: 'Book edited successfully', error: false });

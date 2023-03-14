@@ -18,13 +18,17 @@ export default function BookForm() {
   const [message, setMessage] = useState({ body: '', error: false });
 
   useEffect(() => {
-    getAuthors().then((items) => setAuthors(items));
+    (async () => {
+      const authors = await getAuthors();
+      setAuthors(authors);
+    })();
   }, []);
 
   let handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const book: BookCreate = { isbn, name, authorId, price, isDeleted: false };
-    postBook(book).then((res) => {
+    (async () => {
+      const res = await postBook(book);
       if (res.status === 201) {
         setIsbn(0);
         setName('');
@@ -34,7 +38,7 @@ export default function BookForm() {
       } else {
         setMessage({ body: 'Some error occured', error: true });
       }
-    });
+    })();
   };
 
   return (

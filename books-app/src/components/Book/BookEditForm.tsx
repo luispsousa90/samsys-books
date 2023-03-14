@@ -20,25 +20,30 @@ export default function BookEditForm() {
   const { id } = useParams();
 
   useEffect(() => {
-    getAuthors().then((items) => setAuthors(items));
-    getBookById(Number(id)).then((item) => {
-      setIsbn(item.isbn);
-      setName(item.name);
-      setAuthorId(item.authorId);
-      setPrice(item.price);
-    });
+    (async () => {
+      const authors = await getAuthors();
+      setAuthors(authors);
+    })();
+    (async () => {
+      const book = await getBookById(Number(id));
+      setIsbn(book.isbn);
+      setName(book.name);
+      setAuthorId(book.authorId);
+      setPrice(book.price);
+    })();
   }, [id]);
 
   let handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const book = { isbn, name, authorId, price, isDeleted: false };
-    updateBook(Number(id), book).then((res) => {
+    (async () => {
+      const res = await updateBook(Number(id), book);
       if (res.status === 204) {
         setMessage({ body: 'Book edited successfully', error: false });
       } else {
         setMessage({ body: 'Some error occured', error: true });
       }
-    });
+    })();
   };
 
   return (

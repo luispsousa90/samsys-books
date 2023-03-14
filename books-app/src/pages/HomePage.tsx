@@ -28,44 +28,49 @@ export default function HomePage() {
   const [order, setOrder] = useState('asc');
 
   useEffect(() => {
-    getBooks('', rowsPerPage, page).then((data) => {
-      setBooks(data.data);
-      setTotalPages(data.headers.TotalCount);
-    });
-    getAuthors().then((data) => setAuthors(data));
-  }, [page, rowsPerPage]);
+    (async () => {
+      const books = await getBooks('', rowsPerPage, page);
+      setBooks(books.data);
+      setTotalPages(books.headers.TotalCount);
+    })();
+    (async () => {
+      const authors = await getAuthors();
+      setAuthors(authors);
+    })();
+  }, [rowsPerPage, page]);
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    getBooks(
-      `${orderBy} ${order}`,
-      rowsPerPage,
-      page,
-      isbn,
-      name,
-      authorId
-    ).then((data) => {
-      setBooks(data.data);
-      setTotalPages(data.headers.TotalCount);
-    });
+    (async () => {
+      const books = await getBooks(
+        `${orderBy} ${order}`,
+        rowsPerPage,
+        page,
+        isbn,
+        name,
+        authorId
+      );
+      setBooks(books.data);
+      setTotalPages(books.headers.TotalCount);
+    })();
   };
 
   const handleDelete = (id: number) => {
-    deleteBook(id).then((res) => {
+    (async () => {
+      const res = await deleteBook(id);
       if (res.status === 204) {
-        getBooks(
+        const books = await getBooks(
           `${orderBy} ${order}`,
           rowsPerPage,
           page,
           isbn,
           name,
           authorId
-        ).then((data) => {
-          setBooks(data.data);
-          setTotalPages(data.headers.TotalCount);
-        });
+        );
+        setBooks(books.data);
+        setTotalPages(books.headers.TotalCount);
       }
-    });
+    })();
   };
 
   return (

@@ -2,6 +2,7 @@
 using BooksAPI2.Infrastructure.Entities;
 using BooksAPI2.Infrastructure.Helpers;
 using BooksAPI2.Infrastructure.Interfaces.Repositories;
+using BooksAPI2.Infrastructure.Interfaces.Services;
 using BooksAPI2.Infrastructure.Models.Book;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -15,42 +16,20 @@ public class BooksController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _repo;
+    private readonly IBookService _bookService;
 
-    public BooksController(IUnitOfWork repo, IMapper mapper)
+    public BooksController(IUnitOfWork repo, IMapper mapper, IBookService bookService)
     {
         _repo = repo;
         _mapper = mapper;
+        _bookService = bookService;
     }
 
     // GET: api/Books
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Book>>> GetBooks([FromQuery] BookParameters bookParameters)
+    public async Task<MessagingHelper<PagedList<BookDto>>> GetBooks([FromQuery] BookParameters bookParameters)
     {
-        try
-        {
-            var books = await _repo.Book.GetAllBooks(bookParameters);
-            System.Diagnostics.Debug.WriteLine("Books: " + books);
-            var booksResult = _mapper.Map<IEnumerable<BookDto>>(books);
-            System.Diagnostics.Debug.WriteLine("BooksResult: " + booksResult);
-
-            var metadata = new
-            {
-                books.TotalCount,
-                books.PageSize,
-                books.CurrentPage,
-                books.TotalPages,
-                books.HasNext,
-                books.HasPrevious
-            };
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-
-            return Ok(booksResult);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-            return StatusCode(500, "Internal server error");
-        }
+        return await _bookService.GetAllBooks(bookParameters);
     }
 
     // GET: api/Books/5
@@ -59,7 +38,7 @@ public class BooksController : ControllerBase
     {
         try
         {
-            var book = await _repo.Book.GetBookById(id);
+            var book = await _repo.BookRepository.GetBookById(id);
 
             if (book == null) return NotFound();
 
@@ -88,7 +67,7 @@ public class BooksController : ControllerBase
 
             var bookEntity = _mapper.Map<Book>(book);
 
-            _repo.Book.CreateBook(bookEntity);
+            _repo.BookRepository.CreateBook(bookEntity);
             await _repo.SaveAsync();
 
             var createdBook = _mapper.Map<BookDto>(bookEntity);
@@ -120,14 +99,14 @@ public class BooksController : ControllerBase
                 return BadRequest("Invalid model object");
             }
 
-            var bookEntity = await _repo.Book.GetBookById(id);
+            var bookEntity = await _repo.BookRepository.GetBookById(id);
             if (bookEntity == null)
             {
                 return NotFound();
             }
 
             _mapper.Map(book, bookEntity);
-            _repo.Book.UpdateBook(bookEntity);
+            _repo.BookRepository.UpdateBook(bookEntity);
             await _repo.SaveAsync();
 
             return NoContent();
@@ -145,13 +124,13 @@ public class BooksController : ControllerBase
     {
         try
         {
-            var book = await _repo.Book.GetBookById(id);
+            var book = await _repo.BookRepository.GetBookById(id);
             if (book == null)
             {
                 return NotFound();
             }
 
-            _repo.Book.DeleteBook(book);
+            _repo.BookRepository.DeleteBook(book);
             await _repo.SaveAsync();
 
             return NoContent();
@@ -169,13 +148,13 @@ public class BooksController : ControllerBase
     {
         try
         {
-            var book = await _repo.Book.GetBookById(id);
+            var book = await _repo.BookRepository.GetBookById(id);
             if (book == null)
             {
                 return NotFound();
             }
 
-            _repo.Book.SoftDeleteBook(book);
+            _repo.BookRepository.SoftDeleteBook(book);
             await _repo.SaveAsync();
 
             return NoContent();

@@ -2,6 +2,52 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "Ardalis.SmartEnum/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Ardalis.SmartEnum.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Ardalis.SmartEnum.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Ardalis.SmartEnum.SystemTextJson/7.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Ardalis.SmartEnum": "7.0.0",
+          "System.Text.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/net7.0/Ardalis.SmartEnum.SystemTextJson.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Ardalis.SmartEnum.SystemTextJson.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "AutoMapper/12.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/AutoMapper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AutoMapper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Azure.Core/1.25.0": {
         "type": "package",
         "dependencies": {
@@ -70,7 +116,7 @@
           }
         }
       },
-      "Microsoft.CSharp/4.5.0": {
+      "Microsoft.CSharp/4.7.0": {
         "type": "package",
         "compile": {
           "ref/netcoreapp2.0/_._": {}
@@ -1041,10 +1087,69 @@
             "rid": "win"
           }
         }
+      },
+      "BooksAPI2.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Ardalis.SmartEnum": "7.0.0",
+          "Ardalis.SmartEnum.SystemTextJson": "7.0.0",
+          "Microsoft.EntityFrameworkCore": "8.0.0-preview.2.23128.3",
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.0-preview.2.23128.3"
+        },
+        "compile": {
+          "bin/placeholder/BooksAPI2.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BooksAPI2.Infrastructure.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "Ardalis.SmartEnum/7.0.0": {
+      "sha512": "kimfs7iIHTctxUwMyuJH+dXwFVDzYKtRzuxiAFk7Cb8sjhP1QutEYenz+i/UG92nu4AkoZhfqNpmBOn5/RGDMw==",
+      "type": "package",
+      "path": "ardalis.smartenum/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ardalis.smartenum.7.0.0.nupkg.sha512",
+        "ardalis.smartenum.nuspec",
+        "icon.png",
+        "lib/net7.0/Ardalis.SmartEnum.dll",
+        "lib/net7.0/Ardalis.SmartEnum.xml"
+      ]
+    },
+    "Ardalis.SmartEnum.SystemTextJson/7.0.0": {
+      "sha512": "urJMzPCLvr434cY3JZNHTnGn9TBxH7hrHAOlaMrVSZ5oPBgupyiSOFYB2aikULCp5o+Gdz1oqCA5Qt0j0EmAxA==",
+      "type": "package",
+      "path": "ardalis.smartenum.systemtextjson/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ardalis.smartenum.systemtextjson.7.0.0.nupkg.sha512",
+        "ardalis.smartenum.systemtextjson.nuspec",
+        "icon.png",
+        "lib/net7.0/Ardalis.SmartEnum.SystemTextJson.dll",
+        "lib/net7.0/Ardalis.SmartEnum.SystemTextJson.xml"
+      ]
+    },
+    "AutoMapper/12.0.1": {
+      "sha512": "hvV62vl6Hp/WfQ24yzo3Co9+OPl8wH8hApwVtgWpiAynVJkUcs7xvehnSftawL8Pe8FrPffBRM3hwzLQqWDNjA==",
+      "type": "package",
+      "path": "automapper/12.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "automapper.12.0.1.nupkg.sha512",
+        "automapper.nuspec",
+        "icon.png",
+        "lib/netstandard2.1/AutoMapper.dll",
+        "lib/netstandard2.1/AutoMapper.xml"
+      ]
+    },
     "Azure.Core/1.25.0": {
       "sha512": "X8Dd4sAggS84KScWIjEbFAdt2U1KDolQopTPoHVubG2y3CM54f9l6asVrP5Uy384NWXjsspPYaJgz5xHc+KvTA==",
       "type": "package",
@@ -1126,10 +1231,10 @@
         "version.txt"
       ]
     },
-    "Microsoft.CSharp/4.5.0": {
-      "sha512": "kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
+    "Microsoft.CSharp/4.7.0": {
+      "sha512": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
       "type": "package",
-      "path": "microsoft.csharp/4.5.0",
+      "path": "microsoft.csharp/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1142,6 +1247,7 @@
         "lib/netcoreapp2.0/_._",
         "lib/netstandard1.3/Microsoft.CSharp.dll",
         "lib/netstandard2.0/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.xml",
         "lib/portable-net45+win8+wp8+wpa81/_._",
         "lib/uap10.0.16299/_._",
         "lib/win8/_._",
@@ -1151,7 +1257,7 @@
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "microsoft.csharp.4.5.0.nupkg.sha512",
+        "microsoft.csharp.4.7.0.nupkg.sha512",
         "microsoft.csharp.nuspec",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
@@ -2865,10 +2971,19 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "BooksAPI2.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../BooksAPI2.Infrastructure/BooksAPI2.Infrastructure.csproj",
+      "msbuildProject": "../BooksAPI2.Infrastructure/BooksAPI2.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "Ardalis.SmartEnum >= 7.0.0",
+      "Ardalis.SmartEnum.SystemTextJson >= 7.0.0",
+      "AutoMapper >= 12.0.1",
+      "BooksAPI2.Infrastructure >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 8.0.0-preview.2.23128.3",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.0-preview.2.23128.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.0-preview.2.23128.3"
@@ -2906,7 +3021,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Luis\\Documents\\Samsys\\samsys-books\\BooksAPI2\\BooksAPI2.Infrastructure\\BooksAPI2.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Luis\\Documents\\Samsys\\samsys-books\\BooksAPI2\\BooksAPI2.Infrastructure\\BooksAPI2.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -2919,6 +3038,18 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "Ardalis.SmartEnum": {
+            "target": "Package",
+            "version": "[7.0.0, )"
+          },
+          "Ardalis.SmartEnum.SystemTextJson": {
+            "target": "Package",
+            "version": "[7.0.0, )"
+          },
+          "AutoMapper": {
+            "target": "Package",
+            "version": "[12.0.1, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[8.0.0-preview.2.23128.3, )"

@@ -2,6 +2,7 @@
 using BooksAPI2.Infrastructure.Entities;
 using BooksAPI2.Infrastructure.Interfaces.Helpers;
 using BooksAPI2.Infrastructure.Interfaces.Repositories;
+using BooksAPI2.Infrastructure.Models.Book;
 using Microsoft.EntityFrameworkCore;
 
 namespace BooksAPI2.DAL.Repositories;
@@ -20,7 +21,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return ApplicationDbContext.Set<T>().AsNoTracking();
     }
 
-    public IQueryable<Book> FindAllWithAuthors()
+    protected IQueryable<Book> FindAllWithAuthorName()
     {
         return ApplicationDbContext.Books
             .Include(book => book.Author)

@@ -5,6 +5,7 @@ using BooksAPI2.Infrastructure.Helpers;
 using BooksAPI2.Infrastructure.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
+using BooksAPI2.Infrastructure.Models.Book;
 
 namespace BooksAPI2.DAL.Repositories;
 
@@ -17,7 +18,7 @@ public class BookRepository : GenericRepository<Book>, IBookRepository
 
         public async Task<PagedList<Book>> GetAllBooks(BookParameters bookParameters)
         {
-            var books = FindAllWithAuthors();
+            IQueryable<Book> books = FindAllWithAuthorName();
 
             SearchByIsbn(ref books, bookParameters.Isbn);
             SearchByAuthor(ref books, bookParameters.AuthorId);

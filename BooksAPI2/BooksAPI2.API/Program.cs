@@ -1,6 +1,8 @@
+using BooksAPI2.BLL.Services;
 using BooksAPI2.DAL;
 using BooksAPI2.DAL.Repositories;
 using BooksAPI2.Infrastructure.Interfaces.Repositories;
+using BooksAPI2.Infrastructure.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//Services
+builder.Services.AddTransient<IBookService, BookService>();
 // Auto Mapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Cors

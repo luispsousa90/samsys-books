@@ -24,7 +24,7 @@ namespace BooksAPI2.Controllers;
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            var authorsResult = _mapper.Map<IEnumerable<AuthorDto>>(await _repo.Author.GetAllAuthors());
+            var authorsResult = _mapper.Map<IEnumerable<AuthorDto>>(await _repo.AuthorRepository.GetAllAuthors());
 
             return Ok(authorsResult);
         }
@@ -33,7 +33,7 @@ namespace BooksAPI2.Controllers;
         [HttpGet("{id:Guid}", Name = "AuthorById")]
         public async Task<ActionResult<Author>> GetAuthor(Guid id)
         {
-            var author = await _repo.Author.GetAuthorById(id);
+            var author = await _repo.AuthorRepository.GetAuthorById(id);
 
             if (author == null) return NotFound();
 
@@ -46,7 +46,7 @@ namespace BooksAPI2.Controllers;
         [HttpGet("{id:Guid}/books")]
         public async Task<ActionResult<Author>> GetAuthorWithBooks(Guid id)
         {
-            var author = await _repo.Author.GetAuthorWithDetails(id);
+            var author = await _repo.AuthorRepository.GetAuthorWithDetails(id);
 
             if (author == null) return NotFound();
 
@@ -69,7 +69,7 @@ namespace BooksAPI2.Controllers;
 
                 var authorEntity = _mapper.Map<Author>(author);
 
-                _repo.Author.CreateAuthor(authorEntity);
+                _repo.AuthorRepository.CreateAuthor(authorEntity);
                 await _repo.SaveAsync();
 
                 var createdAuthor = _mapper.Map<AuthorDto>(authorEntity);
@@ -100,14 +100,14 @@ namespace BooksAPI2.Controllers;
                     return BadRequest("Invalid model object");
                 }
 
-                var authorEntity = await _repo.Author.GetAuthorById(id);
+                var authorEntity = await _repo.AuthorRepository.GetAuthorById(id);
                 if (authorEntity == null)
                 {
                     return NotFound();
                 }
 
                 _mapper.Map(author, authorEntity);
-                _repo.Author.UpdateAuthor(authorEntity);
+                _repo.AuthorRepository.UpdateAuthor(authorEntity);
                 await _repo.SaveAsync();
 
                 return NoContent();

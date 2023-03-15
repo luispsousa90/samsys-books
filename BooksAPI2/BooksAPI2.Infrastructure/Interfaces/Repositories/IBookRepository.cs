@@ -1,5 +1,6 @@
 ﻿using BooksAPI2.Infrastructure.Entities;
 using BooksAPI2.Infrastructure.Helpers;
+using BooksAPI2.Infrastructure.Models.Book;
 
 namespace BooksAPI2.Infrastructure.Interfaces.Repositories;
 

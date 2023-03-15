@@ -2,7 +2,7 @@
 
 public interface IUnitOfWork
 {
-    IAuthorRepository Author { get; }
-    IBookRepository Book { get; }
+    IAuthorRepository AuthorRepository { get; }
+    IBookRepository BookRepository { get; }
     Task SaveAsync();
 }

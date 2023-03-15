@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "dyNU5nVVHWbx8Lwipv/4guSEQDhpBSIdyKKYlj8SQtmAMbj8JgaJS2xXaAauYKfYTRI+xECTA1B8WTzVwHopPg==",
+  "dgSpecHash": "EtalGtx2sxI2hilMAQij2Hzvm3FsmUrVxkULZXH9AomexlBdk3kY1fwDdpbsxXHbGR6OS6mCi9iR9l5E3rIMzQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Luis\\Documents\\Samsys\\samsys-books\\BooksAPI2\\BooksAPI2.API\\BooksAPI2.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Luis\\.nuget\\packages\\ardalis.smartenum\\7.0.0\\ardalis.smartenum.7.0.0.nupkg.sha512",
+    "C:\\Users\\Luis\\.nuget\\packages\\ardalis.smartenum.systemtextjson\\7.0.0\\ardalis.smartenum.systemtextjson.7.0.0.nupkg.sha512",
     "C:\\Users\\Luis\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Luis\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\Luis\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",

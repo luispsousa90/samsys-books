@@ -8,7 +8,7 @@ public class UnitOfWork : IUnitOfWork
     private IAuthorRepository? _author;
     private IBookRepository? _book;
 
-    public IBookRepository Book
+    public IBookRepository BookRepository
     {
         get
         {
@@ -26,7 +26,7 @@ public class UnitOfWork : IUnitOfWork
         await _context.SaveChangesAsync();
     }
 
-    public IAuthorRepository Author
+    public IAuthorRepository AuthorRepository
     {
         get
         {

@@ -2,6 +2,36 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "Ardalis.SmartEnum/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Ardalis.SmartEnum.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Ardalis.SmartEnum.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Ardalis.SmartEnum.SystemTextJson/7.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Ardalis.SmartEnum": "7.0.0",
+          "System.Text.Json": "7.0.1"
+        },
+        "compile": {
+          "lib/net7.0/Ardalis.SmartEnum.SystemTextJson.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Ardalis.SmartEnum.SystemTextJson.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Azure.Core/1.25.0": {
         "type": "package",
         "dependencies": {
@@ -1045,6 +1075,34 @@
     }
   },
   "libraries": {
+    "Ardalis.SmartEnum/7.0.0": {
+      "sha512": "kimfs7iIHTctxUwMyuJH+dXwFVDzYKtRzuxiAFk7Cb8sjhP1QutEYenz+i/UG92nu4AkoZhfqNpmBOn5/RGDMw==",
+      "type": "package",
+      "path": "ardalis.smartenum/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ardalis.smartenum.7.0.0.nupkg.sha512",
+        "ardalis.smartenum.nuspec",
+        "icon.png",
+        "lib/net7.0/Ardalis.SmartEnum.dll",
+        "lib/net7.0/Ardalis.SmartEnum.xml"
+      ]
+    },
+    "Ardalis.SmartEnum.SystemTextJson/7.0.0": {
+      "sha512": "urJMzPCLvr434cY3JZNHTnGn9TBxH7hrHAOlaMrVSZ5oPBgupyiSOFYB2aikULCp5o+Gdz1oqCA5Qt0j0EmAxA==",
+      "type": "package",
+      "path": "ardalis.smartenum.systemtextjson/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ardalis.smartenum.systemtextjson.7.0.0.nupkg.sha512",
+        "ardalis.smartenum.systemtextjson.nuspec",
+        "icon.png",
+        "lib/net7.0/Ardalis.SmartEnum.SystemTextJson.dll",
+        "lib/net7.0/Ardalis.SmartEnum.SystemTextJson.xml"
+      ]
+    },
     "Azure.Core/1.25.0": {
       "sha512": "X8Dd4sAggS84KScWIjEbFAdt2U1KDolQopTPoHVubG2y3CM54f9l6asVrP5Uy384NWXjsspPYaJgz5xHc+KvTA==",
       "type": "package",
@@ -2869,6 +2927,8 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "Ardalis.SmartEnum >= 7.0.0",
+      "Ardalis.SmartEnum.SystemTextJson >= 7.0.0",
       "Microsoft.EntityFrameworkCore >= 8.0.0-preview.2.23128.3",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.0-preview.2.23128.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.0-preview.2.23128.3"
@@ -2919,6 +2979,14 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "Ardalis.SmartEnum": {
+            "target": "Package",
+            "version": "[7.0.0, )"
+          },
+          "Ardalis.SmartEnum.SystemTextJson": {
+            "target": "Package",
+            "version": "[7.0.0, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[8.0.0-preview.2.23128.3, )"

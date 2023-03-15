@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ML8SaoC/7ZytsMeR7z30ct2BZVjRPsbD9KCoktp8mpHBUjRpMXQP3cXRyPkXq41AQpNx+2B+8VmX0EEqhELHMw==",
+  "dgSpecHash": "R5r+xjb0LlY+q4mslLn3EvE6E/R9fopRbKqEt9RXXaco+lNCBL6q6WB4EL2TKHpjliwJa1aUVMtIvQpqDFOpMA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Luis\\Documents\\Samsys\\samsys-books\\BooksAPI2\\BooksAPI2.Infrastructure\\BooksAPI2.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Luis\\.nuget\\packages\\ardalis.smartenum\\7.0.0\\ardalis.smartenum.7.0.0.nupkg.sha512",
+    "C:\\Users\\Luis\\.nuget\\packages\\ardalis.smartenum.systemtextjson\\7.0.0\\ardalis.smartenum.systemtextjson.7.0.0.nupkg.sha512",
     "C:\\Users\\Luis\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Luis\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Luis\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

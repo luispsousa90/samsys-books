@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using BooksAPI2.Infrastructure.Entities;
-using BooksAPI2.Infrastructure.Helpers;
-using BooksAPI2.Infrastructure.Interfaces.Repositories;
+﻿using BooksAPI2.Infrastructure.Helpers;
 using BooksAPI2.Infrastructure.Interfaces.Services;
 using BooksAPI2.Infrastructure.Models.Book;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace BooksAPI2.Controllers;
 
@@ -14,14 +10,10 @@ namespace BooksAPI2.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
-    private readonly IMapper _mapper;
-    private readonly IUnitOfWork _repo;
     private readonly IBookService _bookService;
 
-    public BooksController(IUnitOfWork repo, IMapper mapper, IBookService bookService)
+    public BooksController(IBookService bookService)
     {
-        _repo = repo;
-        _mapper = mapper;
         _bookService = bookService;
     }
 
@@ -34,135 +26,57 @@ public class BooksController : ControllerBase
 
     // GET: api/Books/5
     [HttpGet("{id:Guid}", Name = "BookById")]
-    public async Task<ActionResult<Book>> GetBook(Guid id)
+    public async Task<IActionResult> GetBook(Guid id)
     {
-        try
+        if (id == Guid.Empty)
         {
-            var book = await _repo.BookRepository.GetBookById(id);
-
-            if (book == null) return NotFound();
-
-            var bookResult = _mapper.Map<BookDto>(book);
-
-            return Ok(bookResult);
+            return (BadRequest(id));
         }
-        catch (Exception ex)
+
+        var book = await _bookService.GetBookById(id);
+
+        if (book.Obj == null)
         {
-            Console.WriteLine("Error: " + ex.Message);
-            return StatusCode(500, "Internal server error");
+            return NotFound(book.Message);
         }
+
+        return Ok(book);
     }
 
     // POST: api/Books
     // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Book>> PostBook([FromBody] BookForCreationDto? book)
+    public async Task<MessagingHelper> PostBook([FromBody] BookForCreationDto createBookDto)
     {
-        try
-        {
-            if (book == null)
-            {
-                BadRequest("Book object is null");
-            }
+        MessagingHelper res = new();
 
-            var bookEntity = _mapper.Map<Book>(book);
+        if (ModelState.IsValid) return await _bookService.CreateBook(createBookDto);
+        res.Success= false;
+        res.SetMessage("Invalid model object");
+        return res;
 
-            _repo.BookRepository.CreateBook(bookEntity);
-            await _repo.SaveAsync();
-
-            var createdBook = _mapper.Map<BookDto>(bookEntity);
-
-            return CreatedAtRoute("BookById", new { id = createdBook.Id }, createdBook);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-            return StatusCode(500, "Internal server error");
-        }
     }
 
 
     // PUT: api/Books/5
     // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id:Guid}")]
-    public async Task<IActionResult> PutBook(Guid id, [FromBody] BookForUpdateDto? book)
+    public async Task<MessagingHelper> PutBook(Guid id, [FromBody] BookForUpdateDto updateBookDto)
     {
-        try
-        {
-            if (book == null)
-            {
-                return BadRequest("Owner object is null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest("Invalid model object");
-            }
-
-            var bookEntity = await _repo.BookRepository.GetBookById(id);
-            if (bookEntity == null)
-            {
-                return NotFound();
-            }
-
-            _mapper.Map(book, bookEntity);
-            _repo.BookRepository.UpdateBook(bookEntity);
-            await _repo.SaveAsync();
-
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-            return StatusCode(500, "Internal server error");
-        }
+        return await _bookService.UpdateBook(id, updateBookDto);
     }
 
     // DELETE: api/Books/5
     [HttpDelete("{id:Guid}/hard")]
-    public async Task<IActionResult> DeleteBook(Guid id)
+    public async Task<MessagingHelper> DeleteBook(Guid id)
     {
-        try
-        {
-            var book = await _repo.BookRepository.GetBookById(id);
-            if (book == null)
-            {
-                return NotFound();
-            }
-
-            _repo.BookRepository.DeleteBook(book);
-            await _repo.SaveAsync();
-
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-            return StatusCode(500, "Internal server error");
-        }
+       return await _bookService.DeleteBook(id);
     }
 
     // DELETE: api/Books/5
     [HttpDelete("{id:Guid}")]
-    public async Task<IActionResult> SoftDeleteBook(Guid id)
+    public async Task<MessagingHelper> SoftDeleteBook(Guid id)
     {
-        try
-        {
-            var book = await _repo.BookRepository.GetBookById(id);
-            if (book == null)
-            {
-                return NotFound();
-            }
-
-            _repo.BookRepository.SoftDeleteBook(book);
-            await _repo.SaveAsync();
-
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-            return StatusCode(500, "Internal server error");
-        }
+        return await _bookService.SoftDeleteBook(id);
     }
 }

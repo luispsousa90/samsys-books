@@ -8,7 +8,7 @@ namespace BooksAPI2.Infrastructure.Helpers;
 public class MessagingHelper
 {
     public bool Success { get; set; }
-    private string Message { get; set; }
+    public string Message { get; set; }
 
     [JsonConverter(typeof(SmartEnumValueConverter<ErrorType, string>))]
     public ErrorType? ErrorType { get; set; } = null;

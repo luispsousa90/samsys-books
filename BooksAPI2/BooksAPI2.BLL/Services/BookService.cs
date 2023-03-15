@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BooksAPI2.Infrastructure.Entities;
 using BooksAPI2.Infrastructure.Helpers;
 using BooksAPI2.Infrastructure.Interfaces.Repositories;
 using BooksAPI2.Infrastructure.Interfaces.Services;
@@ -26,7 +27,6 @@ public class BookService: IBookService
             var booksResult = _mapper.Map<PagedList<BookDto>>(books);
             res.Obj = booksResult;
             res.Success = true;
-            return res;
         }
         catch (Exception ex)
         {
@@ -37,28 +37,121 @@ public class BookService: IBookService
         return res;
     }
 
-    public Task<MessagingHelper<BookDto?>> GetBookById(Guid bookId)
+    public async Task<MessagingHelper<BookDto>> GetBookById(Guid bookId)
     {
-        throw new NotImplementedException();
+        MessagingHelper<BookDto> res = new();
+
+        try
+        {
+            var book = await _repo.BookRepository.GetBookById(bookId);
+            var bookResult = _mapper.Map<BookDto>(book);
+            res.Obj = bookResult;
+            res.Success = true;
+        }
+        catch (Exception ex)
+        {
+            res.Success = false;
+            res.SetMessage(ex.Message);
+        }
+        return res;
     }
 
-    public Task<MessagingHelper> CreateBook(BookForCreationDto createBookDto)
+    public async Task<MessagingHelper> CreateBook(BookForCreationDto createBookDto)
     {
-        throw new NotImplementedException();
+        MessagingHelper res = new();
+        try
+        {
+            var book = _mapper.Map<Book>(createBookDto);
+            _repo.BookRepository.CreateBook(book);
+            await _repo.SaveAsync();
+            res.Success = true;
+        }
+        catch (Exception ex)
+        {
+            res.Success = false;
+            res.SetMessage(ex.Message);
+        }
+
+        return res;
     }
 
-    public Task<MessagingHelper> UpdateBook(BookForUpdateDto book)
+    public async Task<MessagingHelper> UpdateBook(Guid id, BookForUpdateDto updateBookDto)
     {
-        throw new NotImplementedException();
+        MessagingHelper res = new();
+
+        try
+        {
+            var bookEntity = await _repo.BookRepository.GetBookById(id);
+
+            if (bookEntity == null)
+            {
+                res.Success = false;
+                res.SetMessage("Book not found");
+                return res;
+            }
+
+            _mapper.Map(updateBookDto, bookEntity);
+            _repo.BookRepository.UpdateBook(bookEntity);
+            await _repo.SaveAsync();
+            res.Success = true;
+        }
+        catch (Exception ex)
+        {
+            res.Success = false;
+            res.SetMessage(ex.Message);
+        }
+        return res;
     }
 
-    public Task<MessagingHelper> DeleteBook(BookDto book)
+    public async Task<MessagingHelper> DeleteBook(Guid id)
     {
-        throw new NotImplementedException();
+        MessagingHelper res = new();
+
+        try
+        {
+            var book = await _repo.BookRepository.GetBookById(id);
+            if (book == null)
+            {
+                res.Success = false;
+                res.SetMessage("Book not found");
+                return res;
+            }
+            _repo.BookRepository.DeleteBook(book);
+            await _repo.SaveAsync();
+            res.Success = true;
+        }
+        catch(Exception ex)
+        {
+            res.Success = false;
+            res.SetMessage(ex.Message);
+        }
+
+        return res;
     }
 
-    public Task<MessagingHelper> SoftDeleteBook(BookDto book)
+    public async Task<MessagingHelper> SoftDeleteBook(Guid id)
     {
-        throw new NotImplementedException();
+        MessagingHelper res = new();
+
+        try
+        {
+            var book = await _repo.BookRepository.GetBookById(id);
+            if (book == null)
+            {
+                res.Success = false;
+                res.SetMessage("Book not found");
+                return res;
+            }
+            _repo.BookRepository.SoftDeleteBook(book);
+            await _repo.SaveAsync();
+            res.Success = true;
+        }
+        catch(Exception ex)
+        {
+            res.Success = false;
+            res.SetMessage(ex.Message);
+        }
+
+        return res;
     }
 }

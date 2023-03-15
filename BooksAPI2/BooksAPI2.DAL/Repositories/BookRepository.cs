@@ -5,7 +5,6 @@ using BooksAPI2.Infrastructure.Helpers;
 using BooksAPI2.Infrastructure.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
-using BooksAPI2.Infrastructure.Models.Book;
 
 namespace BooksAPI2.DAL.Repositories;
 

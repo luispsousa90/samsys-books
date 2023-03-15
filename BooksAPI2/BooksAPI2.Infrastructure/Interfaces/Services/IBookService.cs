@@ -7,13 +7,13 @@ public interface IBookService
 {
     Task<MessagingHelper<PagedList<BookDto>>> GetAllBooks(BookParameters bookParameters);
 
-    Task<MessagingHelper<BookDto?>> GetBookById(Guid bookId);
+    Task<MessagingHelper<BookDto>> GetBookById(Guid bookId);
 
     Task<MessagingHelper> CreateBook(BookForCreationDto createBookDto);
 
-    Task<MessagingHelper> UpdateBook(BookForUpdateDto book);
+    Task<MessagingHelper> UpdateBook(Guid id, BookForUpdateDto book);
 
-    Task<MessagingHelper> DeleteBook(BookDto book);
+    Task<MessagingHelper> DeleteBook(Guid id);
 
-    Task<MessagingHelper> SoftDeleteBook(BookDto book);
+    Task<MessagingHelper> SoftDeleteBook(Guid id);
 }

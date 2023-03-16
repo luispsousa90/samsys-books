@@ -15,6 +15,7 @@ import { getAuthors } from '../../services/AuthorService';
 
 // Components
 import SelectAuthor from '../Select/SelectAuthor';
+import { nonNegative } from '../../helpers/Validation';
 
 export default function BookEditForm() {
   const [authors, setAuthors] = useState([]);
@@ -47,14 +48,19 @@ export default function BookEditForm() {
     e.preventDefault();
     const book = { isbn, name, authorId, price, isDeleted: false };
     (async () => {
-      const res = await updateBook(id, book);
-      if (res.status === 200) {
-        Toast.Show('success', 'Book edited successfully');
-        setMessage({ body: 'Book edited successfully', error: false });
-        setTimeout(() => navigate('/'), 5500);
-      } else {
-        Toast.Show('error', 'Cannot edit book');
+      try {
+        const res = await updateBook(id, book);
+        if (res.status === 200) {
+          Toast.Show('success', 'Book edited successfully');
+          setMessage({ body: 'Book edited successfully', error: false });
+          setTimeout(() => navigate('/'), 5500);
+        } else {
+          Toast.Show('error', 'Cannot edit book');
+          setMessage({ body: 'Some error occured', error: true });
+        }
+      } catch (error) {
         setMessage({ body: 'Some error occured', error: true });
+        Toast.Show('error', `Ups! Something went wrong`);
       }
     })();
   };
@@ -94,6 +100,8 @@ export default function BookEditForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={!nonNegative(price)}
+            helperText={!nonNegative(price) && 'Price must be non-negative'}
             required
             fullWidth
             id='price'

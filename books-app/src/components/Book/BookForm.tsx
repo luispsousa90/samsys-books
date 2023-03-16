@@ -11,6 +11,7 @@ import { getAuthors } from '../../services/AuthorService';
 import BookCreate from '../../types/Book/BookCreate';
 // Helpers
 import Toast from '../../helpers/Toast';
+import { nonNegative } from '../../helpers/Validation';
 
 export default function BookForm() {
   const [authors, setAuthors] = useState([]);
@@ -31,17 +32,22 @@ export default function BookForm() {
     e.preventDefault();
     const book: BookCreate = { isbn, name, authorId, price, isDeleted: false };
     (async () => {
-      const res = await postBook(book);
-      if (res.status === 200) {
-        setIsbn(0);
-        setName('');
-        setAuthorId('');
-        setPrice(0);
-        setMessage({ body: 'Book created successfully', error: false });
-        Toast.Show('success', 'Book added successfully');
-      } else {
+      try {
+        const res = await postBook(book);
+        if (res.status === 200) {
+          setIsbn(0);
+          setName('');
+          setAuthorId('');
+          setPrice(0);
+          setMessage({ body: 'Book created successfully', error: false });
+          Toast.Show('success', 'Book added successfully');
+        } else {
+          setMessage({ body: 'Some error occured', error: true });
+          Toast.Show('error', 'Cannot add book');
+        }
+      } catch (error) {
         setMessage({ body: 'Some error occured', error: true });
-        Toast.Show('error', 'Cannot add book');
+        Toast.Show('error', `Ups! Something went wrong`);
       }
     })();
   };
@@ -81,6 +87,8 @@ export default function BookForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={!nonNegative(price)}
+            helperText={!nonNegative(price) && 'Price must be non-negative'}
             required
             fullWidth
             id='price'

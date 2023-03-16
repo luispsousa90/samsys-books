@@ -32,6 +32,7 @@ export default function HomePage() {
   useEffect(() => {
     (async () => {
       const books = await getBooks('', rowsPerPage, page);
+      console.log('books', books);
       setBooks(books.data);
       setTotalPages(books.headers.TotalCount);
     })();

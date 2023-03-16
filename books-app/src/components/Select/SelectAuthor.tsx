@@ -37,11 +37,12 @@ export default function BasicSelect({
         onChange={handleChange}
       >
         <MenuItem value={0}>All</MenuItem>
-        {items.map((item) => (
-          <MenuItem key={item.id} value={item.id}>
-            {item.name}
-          </MenuItem>
-        ))}
+        {items.length > 0 &&
+          items.map((item) => (
+            <MenuItem key={item.id} value={item.id}>
+              {item.name}
+            </MenuItem>
+          ))}
       </Select>
     </FormControl>
   );

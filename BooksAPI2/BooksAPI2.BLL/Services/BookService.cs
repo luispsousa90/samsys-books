@@ -21,11 +21,15 @@ public class BookService: IBookService
     public async Task<MessagingHelper<PagedList<BookDto>>> GetAllBooks(BookParameters bookParameters)
     {
         var res = new MessagingHelper<PagedList<BookDto>>() { Obj = new PagedList<BookDto>()};
+
         try
         {
             var books = await _repo.BookRepository.GetAllBooks(bookParameters);
-            var booksResult = _mapper.Map<PagedList<BookDto>>(books);
-            res.Obj = booksResult;
+            /*var booksResult = _mapper.Map<PagedList<BookDto>>(books);*/
+            res.Obj.Items = books.Items.Select(r => new BookDto(r)).ToList();;
+            res.Obj.TotalCount = books.TotalCount;
+            res.Obj.PageSize = books.PageSize;
+            res.Obj.CurrentPage = books.CurrentPage;
             res.Success = true;
         }
         catch (Exception ex)

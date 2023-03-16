@@ -12,13 +12,12 @@ const getBooks = async (
 ) => {
   const authorQuery = authorid === '' ? '' : `&authorid=${authorid}`;
 
-  const res = await axios.get(
+  const { data } = await axios.get(
     `${booksAPI}/books?orderBy=${orderBy}&pageSize=${pageSize}&pageNumber=${
       pageNumber + 1
     }&isbn=${isbn}&name=${name}${authorQuery}`
   );
-  console.log(res);
-  // return { data: obj, headers: JSON.parse(headers['x-pagination']) };
+  return data;
 };
 
 const getBookById = async (id: string) => {

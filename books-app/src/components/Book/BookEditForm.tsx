@@ -31,8 +31,8 @@ export default function BookEditForm() {
 
   useEffect(() => {
     (async () => {
-      const authors = await getAuthors();
-      setAuthors(authors);
+      const res = await getAuthors();
+      setAuthors(res.obj);
     })();
     (async () => {
       const book = await getBookById(id);
@@ -48,7 +48,7 @@ export default function BookEditForm() {
     const book = { isbn, name, authorId, price, isDeleted: false };
     (async () => {
       const res = await updateBook(id, book);
-      if (res.status === 204) {
+      if (res.status === 200) {
         Toast.Show('success', 'Book edited successfully');
         setMessage({ body: 'Book edited successfully', error: false });
         setTimeout(() => navigate('/'), 5500);

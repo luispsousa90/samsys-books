@@ -9,6 +9,9 @@ public class BookDto
     public decimal Price { get; set; }
     public string AuthorName { get; set; }
 
+    public BookDto()
+    {
+    }
     public BookDto(Entities.Book book)
     {
         Id = book.Id;

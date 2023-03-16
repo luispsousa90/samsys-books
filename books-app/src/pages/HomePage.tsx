@@ -31,21 +31,20 @@ export default function HomePage() {
 
   useEffect(() => {
     (async () => {
-      const books = await getBooks('', rowsPerPage, page);
-      console.log('books', books);
-      setBooks(books.data);
-      setTotalPages(books.headers.TotalCount);
+      const res = await getBooks('', rowsPerPage, page);
+      setBooks(res.obj.items);
+      setTotalPages(res.obj.totalCount);
     })();
     (async () => {
-      const authors = await getAuthors();
-      setAuthors(authors);
+      const res = await getAuthors();
+      setAuthors(res.obj);
     })();
   }, [rowsPerPage, page]);
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     (async () => {
-      const books = await getBooks(
+      const res = await getBooks(
         `${orderBy} ${order}`,
         rowsPerPage,
         page,
@@ -53,8 +52,8 @@ export default function HomePage() {
         name,
         authorId
       );
-      setBooks(books.data);
-      setTotalPages(books.headers.TotalCount);
+      setBooks(res.obj.items);
+      setTotalPages(res.obj.totalCount);
     })();
   };
 
@@ -70,8 +69,8 @@ export default function HomePage() {
           name,
           authorId
         );
-        setBooks(books.data);
-        setTotalPages(books.headers.TotalCount);
+        setBooks(books.obj.items);
+        setTotalPages(books.obj.totalCount);
       }
     })();
   };

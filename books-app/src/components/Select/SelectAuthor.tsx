@@ -36,7 +36,7 @@ export default function BasicSelect({
         label={name}
         onChange={handleChange}
       >
-        <MenuItem value={0}>All</MenuItem>
+        <MenuItem value={''}>All</MenuItem>
         {items.length > 0 &&
           items.map((item) => (
             <MenuItem key={item.id} value={item.id}>

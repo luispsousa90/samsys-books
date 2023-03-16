@@ -22,8 +22,8 @@ export default function BookForm() {
 
   useEffect(() => {
     (async () => {
-      const authors = await getAuthors();
-      setAuthors(authors);
+      const res = await getAuthors();
+      setAuthors(res.obj);
     })();
   }, []);
 
@@ -32,7 +32,7 @@ export default function BookForm() {
     const book: BookCreate = { isbn, name, authorId, price, isDeleted: false };
     (async () => {
       const res = await postBook(book);
-      if (res.status === 201) {
+      if (res.status === 200) {
         setIsbn(0);
         setName('');
         setAuthorId('');

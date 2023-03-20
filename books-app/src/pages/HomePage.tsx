@@ -7,18 +7,15 @@ import MainLayout from '../layouts/MainLayout';
 import Table from '../components/Table/Table';
 import TablePagination from '../components/Table/TablePagination';
 import BookSearchForm from '../components/Book/BookSearchForm';
-import TableReact from '../components/Table/TableReact';
 // Services
 import { getBooks } from '../services/BookService';
 import { getAuthors } from '../services/AuthorService';
 import { deleteBook } from '../services/BookService';
-import { Typography } from '@mui/material';
 
 const bookHeaders = ['ID', 'ISBN', 'Title', 'Author', 'Price'];
 
 export default function HomePage() {
   const [books, setBooks] = useState([]);
-  const [page, setPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -31,7 +28,7 @@ export default function HomePage() {
 
   useEffect(() => {
     (async () => {
-      const res = await getBooks('', rowsPerPage, page);
+      const res = await getBooks('', rowsPerPage, currentPage);
       setBooks(res.obj.items);
       setTotalPages(res.obj.totalCount);
     })();
@@ -39,7 +36,7 @@ export default function HomePage() {
       const res = await getAuthors();
       setAuthors(res.obj);
     })();
-  }, [rowsPerPage, page]);
+  }, [rowsPerPage, currentPage]);
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,7 +44,7 @@ export default function HomePage() {
       const res = await getBooks(
         `${orderBy} ${order}`,
         rowsPerPage,
-        page,
+        currentPage,
         isbn,
         name,
         authorId
@@ -64,7 +61,7 @@ export default function HomePage() {
         const books = await getBooks(
           `${orderBy} ${order}`,
           rowsPerPage,
-          page,
+          currentPage,
           isbn,
           name,
           authorId
@@ -98,8 +95,6 @@ export default function HomePage() {
           handleDelete={handleDelete}
         />
         <TablePagination
-          page={page}
-          setPage={setPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           totalPages={totalPages}
@@ -111,10 +106,6 @@ export default function HomePage() {
             Add Book
           </Button>
         </Link>
-        <Typography variant='h3' align='center' gutterBottom>
-          Using react-table
-        </Typography>
-        <TableReact data={books} />
       </>
     </MainLayout>
   );

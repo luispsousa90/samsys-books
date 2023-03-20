@@ -44,6 +44,20 @@ function Navbar() {
               BooksApp
             </Typography>
           </Link>
+          <Link to='/react-table'>
+            <Typography
+              sx={{
+                ml: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              React Table
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'

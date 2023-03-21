@@ -38,6 +38,7 @@ export default function TableReact(props: ITableReactProps) {
       data,
       initialState: { pageIndex: 0 },
       manualPagination: true,
+      autoResetPage: false,
       pageCount: props.pageCount,
     },
     useSortBy,

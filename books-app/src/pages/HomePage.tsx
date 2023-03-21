@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Toast from '../helpers/Toast';
 // Layout
 import MainLayout from '../layouts/MainLayout';
 // Components
@@ -56,18 +57,25 @@ export default function HomePage() {
 
   const handleDelete = (id: string) => {
     (async () => {
-      const res = await deleteBook(id);
-      if (res.status === 204) {
-        const books = await getBooks(
-          `${orderBy} ${order}`,
-          rowsPerPage,
-          currentPage,
-          isbn,
-          name,
-          authorId
-        );
-        setBooks(books.obj.items);
-        setTotalPages(books.obj.totalCount);
+      try {
+        const res = await deleteBook(id);
+        if (res.success) {
+          const books = await getBooks(
+            `${orderBy} ${order}`,
+            rowsPerPage,
+            currentPage,
+            isbn,
+            name,
+            authorId
+          );
+          Toast.Show('success', `Book deleted successfully`);
+          setBooks(books.obj.items);
+          setTotalPages(books.obj.totalCount);
+        } else {
+          Toast.Show('error', `${res.message}`);
+        }
+      } catch (error) {
+        Toast.Show('error', 'Ups! Something went wrong');
       }
     })();
   };

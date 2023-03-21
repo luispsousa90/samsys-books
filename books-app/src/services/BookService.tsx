@@ -28,15 +28,18 @@ const getBookById = async (id: string) => {
 };
 
 const postBook = async (book: BookCreate) => {
-  return await axios.post(`${booksAPI}/books`, book);
+  const { data } = await axios.post(`${booksAPI}/books`, book);
+  return data;
 };
 
 const updateBook = async (id: string, book: BookCreate) => {
-  return await axios.put(`${booksAPI}/books/${id}`, book);
+  const { data } = await axios.put(`${booksAPI}/books/${id}`, book);
+  return data;
 };
 
 const deleteBook = async (id: string) => {
-  return await axios.delete(`${booksAPI}/books/${id}`);
+  const { data } = await axios.delete(`${booksAPI}/books/${id}`);
+  return data;
 };
 
 export { getBooks, getBookById, postBook, updateBook, deleteBook };

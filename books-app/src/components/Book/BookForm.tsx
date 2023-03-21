@@ -19,7 +19,6 @@ export default function BookForm() {
   const [name, setName] = useState('');
   const [authorId, setAuthorId] = useState('');
   const [price, setPrice] = useState(0);
-  const [message, setMessage] = useState({ body: '', error: false });
 
   useEffect(() => {
     (async () => {
@@ -34,19 +33,16 @@ export default function BookForm() {
     (async () => {
       try {
         const res = await postBook(book);
-        if (res.status === 200) {
+        if (res.success) {
           setIsbn(0);
           setName('');
           setAuthorId('');
           setPrice(0);
-          setMessage({ body: 'Book created successfully', error: false });
           Toast.Show('success', 'Book added successfully');
         } else {
-          setMessage({ body: 'Some error occured', error: true });
-          Toast.Show('error', 'Cannot add book');
+          Toast.Show('error', `${res.message}`);
         }
       } catch (error) {
-        setMessage({ body: 'Some error occured', error: true });
         Toast.Show('error', `Ups! Something went wrong`);
       }
     })();

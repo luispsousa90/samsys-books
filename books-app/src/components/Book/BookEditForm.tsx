@@ -1,10 +1,8 @@
-import { Alert, Box, Button, Grid, TextField } from '@mui/material';
+import { Box, Button, Grid, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import Message from '../../types/Message';
 
 // Helpers
 import Toast from '../../helpers/Toast';
@@ -23,7 +21,6 @@ export default function BookEditForm() {
   const [name, setName] = useState('');
   const [authorId, setAuthorId] = useState('');
   const [price, setPrice] = useState(0);
-  const [message, setMessage] = useState<Message>();
 
   const params = useParams();
   const id = params.id as string;
@@ -50,16 +47,13 @@ export default function BookEditForm() {
     (async () => {
       try {
         const res = await updateBook(id, book);
-        if (res.status === 200) {
+        if (res.success) {
           Toast.Show('success', 'Book edited successfully');
-          setMessage({ body: 'Book edited successfully', error: false });
           setTimeout(() => navigate('/'), 5500);
         } else {
-          Toast.Show('error', 'Cannot edit book');
-          setMessage({ body: 'Some error occured', error: true });
+          Toast.Show('error', `${res.message}`);
         }
       } catch (error) {
-        setMessage({ body: 'Some error occured', error: true });
         Toast.Show('error', `Ups! Something went wrong`);
       }
     })();

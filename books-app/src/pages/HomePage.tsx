@@ -28,18 +28,27 @@ export default function HomePage() {
   const [order, setOrder] = useState('asc');
 
   useEffect(() => {
-    (async () => {
-      const res = await getBooks('', rowsPerPage, currentPage);
-      setBooks(res.obj.items);
-      setTotalPages(res.obj.totalCount);
-    })();
+    loadBooks();
     (async () => {
       const res = await getAuthors();
       setAuthors(res.obj);
     })();
-  }, [rowsPerPage, currentPage]);
+  }, [currentPage, rowsPerPage]);
 
-  const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+  const loadBooks = async () => {
+    const res = await getBooks(
+      `${orderBy} ${order}`,
+      rowsPerPage,
+      currentPage,
+      isbn,
+      name,
+      authorId
+    );
+    setBooks(res.obj.items);
+    setTotalPages(res.obj.totalCount);
+  };
+
+  const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     (async () => {
       const res = await getBooks(
@@ -52,6 +61,7 @@ export default function HomePage() {
       );
       setBooks(res.obj.items);
       setTotalPages(res.obj.totalCount);
+      setCurrentPage(0);
     })();
   };
 

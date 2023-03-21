@@ -1,7 +1,8 @@
 import { useMemo, useEffect } from 'react';
-import { Column, useTable, usePagination } from 'react-table';
+import { Column, useTable, usePagination, useSortBy } from 'react-table';
 import { Link } from 'react-router-dom';
 import Book from '../../types/Book/Book';
+import styles from '../../styles/Table.module.css';
 
 interface ITableReactProps {
   columns: Column<Book>[];
@@ -39,6 +40,7 @@ export default function TableReact(props: ITableReactProps) {
       manualPagination: true,
       pageCount: props.pageCount,
     },
+    useSortBy,
     usePagination
   );
 
@@ -64,13 +66,17 @@ export default function TableReact(props: ITableReactProps) {
           )}
         </code>
       </pre>
-      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+      <table
+        {...getTableProps()}
+        style={{ border: 'solid 1px blue' }}
+        className={styles.table}
+      >
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
-                  {...column.getHeaderProps()}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
                   style={{
                     borderBottom: 'solid 3px red',
                     background: 'aliceblue',
@@ -79,6 +85,14 @@ export default function TableReact(props: ITableReactProps) {
                   }}
                 >
                   {column.render('Header')}
+                  {/* Add a sort direction indicator */}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? ' 🔽'
+                        : ' 🔼'
+                      : ''}
+                  </span>
                 </th>
               ))}
               <th
@@ -127,7 +141,7 @@ export default function TableReact(props: ITableReactProps) {
           })}
         </tbody>
       </table>
-      <div className='pagination'>
+      <div className={`pagination ${styles.pagination}`}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}

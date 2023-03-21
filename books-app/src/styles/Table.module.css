@@ -1,0 +1,22 @@
+.table {
+  border-spacing: 0;
+  border: 1px solid black;
+  margin-top: 0.5rem;
+}
+
+.table th,
+.table td {
+  margin: 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.table th:last-child,
+.table td:last-child {
+  border-right: 0;
+}
+
+.pagination {
+  padding: 0.5rem;
+}
